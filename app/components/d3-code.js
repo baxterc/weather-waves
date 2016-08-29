@@ -6,22 +6,26 @@ export default Ember.Component.extend({
     generateScatter() {
       var color = function() {
         var randomHue = Math.floor(Math.random() * 255);
-        return "rgb(" + randomHue + ",200, 40)"
+        return randomHue;
       }
+      var randColor =  "rgb(" + color() + "," + color() + "," + color() + ")"
+
 
       var dataSet = [];
       var randomScatter = Math.floor(Math.random() * 50)
       for (var i = 0; i < randomScatter; i++) {
-        var randomInt = Math.floor(Math.random() * 100);
+        var randomInt = Math.floor(Math.random() * 250);
         dataSet.push(randomInt);
         console.log(randomInt);
       };
-      d3.select("body").append("svg").attr('width', 100).attr('height', 100).append('circle').attr("cx", randomScatter).attr("cy", randomScatter).attr("r", randomScatter).style("fill", color);
-      randomScatter = Math.floor(Math.random() * 50)
+      for (i = 0; i < 200; i++ ) {
+        d3.select("body").append("svg").attr('width', 100).attr('height', 100).append('circle').attr("cx", randomScatter).attr("cy", randomScatter).attr("r", randomScatter).style("fill", randColor);
+        randomScatter = Math.floor(Math.random() * 50)
+      }
     }
   },
   didInsertElement() {
-    let svgContainer = d3.select('#holder').append('svg').attr('width',600).attr('height',600);
+    let svgContainer = d3.select('#holder').append('svg').attr('width',600).attr('height',300);
     svgContainer.append('circle')
     .attr('cx',125)
     .attr('cy',100)
