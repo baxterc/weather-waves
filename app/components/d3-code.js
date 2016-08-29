@@ -3,8 +3,10 @@ import d3 from 'd3';
 
 
 export default Ember.Component.extend({
+  currentWeather: Ember.inject.service(),
 
   didInsertElement() {
+    var windDeg = this.get('model.wind.deg');
     let svgContainer = d3.select('#holder').append('svg').attr('width',700).attr('height',700);
 
     svgContainer.append('circle')
@@ -13,15 +15,15 @@ export default Ember.Component.extend({
     .attr('r', 100)
     .style('fill','blue')
     .transition()
-    .attr('cx',500)
-    .attr('cy',450)
+    .attr('cx', 250 * (Math.cos(windDeg)) )
+    .attr('cy', 250 * (Math.sin(windDeg-180)) )
     .duration(2000)
     .style('fill','red');
 
   },
   actions: {
-    getWeather() {
-      console.log(model);
-    },
+    weatherNow: function() {
+      console.log(this.currentWeather.getWeather());
+    }
   }
 });
