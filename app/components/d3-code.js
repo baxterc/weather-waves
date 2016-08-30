@@ -6,30 +6,20 @@ export default Ember.Component.extend({
 
   actions: {
     generateScatter() {
-      var tempMax = this.get('model.main.temp_max')
-      var tempMin = this.get('model.main.temp_min')
-      var tempBlue = Math.floor((255 / tempMin) * 255);
-      var tempRed = Math.floor((255 / tempMax) * 255);
+      var tempMax = Math.floor(this.get('model.main.temp_max'));
+      var tempMin = Math.floor(this.get('model.main.temp_min'));
       var tempGreen = Math.floor(this.get('model.main.temp_max') - this.get('model.main.temp_min'));
-
-      console.log(tempBlue + 'blue');
-      console.log(tempRed + 'red');
-      console.log(tempGreen + 'green');
-      var color = function() {
-        var randomHue = Math.floor(Math.random() * 255);
-        return randomHue;
-      };
-      var dataSet = [];
-
+      var redIncrement = Math.floor(tempMax / 144);
+      var blueIncrement = Math.floor(tempMin / 144);
+      var red = 0;
+      var blue = tempMin - 100;
+      var radius = tempGreen;
       for (var i = 0; i < 144; i++ ) {
-        var randomScatter = Math.floor(Math.random() * (tempMax / tempMin)) * 50;
-        var red = Math.abs(255 - tempRed + (144 / i));
-        console.log(red);
-        var blue =  Math.abs(tempBlue - (144 / i)) ;
-        console.log(blue);
         var randColor =  "rgb(" + red + "," + tempGreen + "," + blue + ")";
-        d3.select("body").append("svg").attr('width', 100).attr('height', 100).append('circle').attr("cx", randomScatter).attr("cy", randomScatter).attr("r", randomScatter).style("fill", randColor);
-        randomScatter = Math.floor(Math.random() * tempGreen * 5);
+        d3.select("body").append("svg").attr('width', 100).attr('height', 100).append('circle').attr("cx", radius).attr("cy", radius).attr("r", radius).style("fill", randColor);
+        blue -= blueIncrement;
+        red += Math.floor(redIncrement / 2);
+        radius += ((blueIncrement / 3 ) + redIncrement / 2);
       }
     },
     weatherNow: function() {
@@ -75,12 +65,5 @@ export default Ember.Component.extend({
     // .attr("r", function(d) { return Math.sqrt(d); });
     //
   },
-<<<<<<< HEAD
-=======
-  actions: {
-    getWeather() {
-      console.log(model);
-    }
-  }
->>>>>>> 4f4fa41af01e2290984848975215b98d2926c13d
+
 });
