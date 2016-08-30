@@ -6,7 +6,11 @@ export default Ember.Component.extend({
   currentWeather: Ember.inject.service(),
 
   didInsertElement() {
-    var windDeg = this.get('model.wind.deg');
+    // var windRad = (this.get('model.wind.deg') * (Math.PI/180)) ;
+    var windRad = (90-this.get('model.wind.deg')) * (Math.PI/180) ;
+    // if (this.get('model.wind.deg')) {
+    //   windRad=this.get('model.wind.deg');
+    // };
     let svgContainer = d3.select('#holder').append('svg').attr('width',700).attr('height',700);
 
     svgContainer.append('circle')
@@ -15,8 +19,8 @@ export default Ember.Component.extend({
     .attr('r', 100)
     .style('fill','blue')
     .transition()
-    .attr('cx', 250 * (Math.cos(windDeg)) )
-    .attr('cy', 250 * (Math.sin(windDeg-180)) )
+    .attr('cx', 250 - (250 * Math.cos(windRad)) )
+    .attr('cy', 250 + (250 * Math.sin(windRad)) )
     .duration(2000)
     .style('fill','red');
 
