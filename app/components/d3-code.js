@@ -4,27 +4,36 @@ import d3 from 'd3';
 export default Ember.Component.extend({
   currentWeather: Ember.inject.service(),
 
-<<<<<<< HEAD
   actions: {
     generateScatter() {
+      var tempMax = this.get('model.main.temp_max')
+      var tempMin = this.get('model.main.temp_min')
+      var tempBlue = Math.floor((255 / tempMin) * 255);
+      var tempRed = Math.floor((255 / tempMax) * 255);
+      var tempGreen = Math.floor(this.get('model.main.temp_max') - this.get('model.main.temp_min'));
+
+      console.log(tempBlue + 'blue');
+      console.log(tempRed + 'red');
+      console.log(tempGreen + 'green');
       var color = function() {
         var randomHue = Math.floor(Math.random() * 255);
         return randomHue;
-      }
-      var randColor =  "rgb(" + color() + "," + color() + "," + color() + ")"
-
-      var dataSet = [];
-      var randomScatter = Math.floor(Math.random() * 50)
-      for (var i = 0; i < randomScatter; i++) {
-        var randomInt = Math.floor(Math.random() * 250);
-        dataSet.push(randomInt);
-        console.log(randomInt);
       };
-      console.log(model.name)
-      for (i = 0; i < 200; i++ ) {
+      var dataSet = [];
+
+      for (var i = 0; i < 144; i++ ) {
+        var randomScatter = Math.floor(Math.random() * (tempMax / tempMin)) * 50;
+        var red = Math.abs(255 - tempRed + (144 / i));
+        console.log(red);
+        var blue =  Math.abs(tempBlue - (144 / i)) ;
+        console.log(blue);
+        var randColor =  "rgb(" + red + "," + tempGreen + "," + blue + ")";
         d3.select("body").append("svg").attr('width', 100).attr('height', 100).append('circle').attr("cx", randomScatter).attr("cy", randomScatter).attr("r", randomScatter).style("fill", randColor);
-        randomScatter = Math.floor(Math.random() * 50)
+        randomScatter = Math.floor(Math.random() * tempGreen * 5);
       }
+    },
+    weatherNow: function() {
+      console.log(this.currentWeather.getWeather());
     }
   },
   didInsertElement() {
@@ -43,9 +52,4 @@ export default Ember.Component.extend({
     .style('fill','red');
 
   },
-  actions: {
-    weatherNow: function() {
-      console.log(this.currentWeather.getWeather());
-    }
-  }
 });

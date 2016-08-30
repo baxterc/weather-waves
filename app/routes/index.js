@@ -14,17 +14,9 @@ export default Ember.Route.extend({
   actions: {
     getLoc: function() {
       navigator.geolocation.getCurrentPosition(function(position) {
-        console.log(position.coords.latitude, position.coords.longitude);
+        // console.log(position.coords.latitude, position.coords.longitude);
         return {lat: position.coords.latitude, long: position.coords.longitude};
       });
-    },
-
-    getWind: function() {
-      return Ember.$.getJSON(url).then(function(responseJSON) {
-        console.log(responseJSON);
-        return responseJSON;
-      });
     }
-
   }
 });
