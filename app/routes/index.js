@@ -18,11 +18,8 @@ export default Ember.Route.extend({
     },
 
     setCity(params) {
-      // console.log(params[0]);
-      this.set('currentCity', params.cityName);
-      console.log(this.get("currentCity"));
-      this.transitionTo('index', model.get());
-      // this.refresh();
+      this.transitionTo('dot-result', params.cityName);
+
     }
 
   }
