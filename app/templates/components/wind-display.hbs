@@ -3,9 +3,10 @@
   {{userWeather}}
 </div>
 
-<button {{action 'generateWind'}}>Generate Wind</button>
+
 
 <h3>Showing wind for {{weather.name}}</h3>
+<button {{action 'generateWind'}}>Generate Wind</button>
 <br>
 <label for="city">Enter a city below (without spaces)</label>
 {{input value=city id="city"}}
