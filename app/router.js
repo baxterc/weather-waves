@@ -9,6 +9,8 @@ const Router = Ember.Router.extend({
 Router.map(function() {
   this.route('city', {path: '/city/:name'});
   this.route('wind-plot');
+  this.route('city-comparison');
+  this.route('scatter-map');
 });
 
 export default Router;
