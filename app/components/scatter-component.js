@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   actions: {
+
     generateScatter() {
       var model = this.get('model');
       var tempMax = Math.floor(model.list[1].main.temp_max);
@@ -31,10 +32,21 @@ export default Ember.Component.extend({
         .attr('cy', clouds )
         .attr('r', clouds)
         .duration(8000)
+        .transition()
+        .remove()
+        .duration(8000)
         blue -= Math.floor(blueIncrement);
         red += Math.floor(redIncrement / 2);
         radius = (red + blue) / 4;
       }
     }
   },
+  generateBar() {
+    var highTemps = [];
+    var lowTemps = [];
+    var model = this.get('model');
+    for (var i = 0; i < model.list.length; i++ ) {
+      
+    }
+  }
 });
