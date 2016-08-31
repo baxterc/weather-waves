@@ -5,7 +5,6 @@ export default Ember.Component.extend({
 
   didInsertElement() {
     var model = this.get('model');
-    // console.log(model);
     var cloudsArray = [];
     var humidityArray = [];
     var windArray = [];
@@ -14,31 +13,11 @@ export default Ember.Component.extend({
     console.log(model);
     for (var i = 0; i < model.list.length; i++) {
       cloudsArray.push((model.list[i].clouds * 3) + 10);
-      //console.log((model.list[i].clouds));
       humidityArray.push(model.list[i].humidity * 6 + 100);
-      // console.log(model.list[i].humidity);
       windArray.push(model.list[i].speed * 200);
-      //console.log(model.list[i].speed);
-      // tempArray.push(((model.list[i].temp.day) * (9/5)) - 459.67);
-      //highTempArray.push(parseInt((model.list[i].temp.max * 4).toString().slice(2,4)) * 3);
       highTempArray.push((model.list[i].temp.max - 55));
-      // console.log("high temp in Kelvin is: " + model.list[i].temp.max);
-      // console.log("high temp color value is: " + (model.list[i].temp.max - 55));
-      // lowTempArray.push(parseInt((model.list[i].temp.min * 4).toString().slice(2,4)) * 3);
       lowTempArray.push((model.list[i].temp.min - 180));
-      // console.log("low temp in Kelvin is: " + model.list[i].temp.min);
-      console.log('low temp color val is: ' + (256 - (model.list[i].temp.min - 180)));
-      console.log('high temp color val is: ' + (model.list[i].temp.max - 55));
     }
-    // console.log(cloudsArray);
-    // console.log(humidityArray);
-    // console.log(windArray);
-    // console.log(highTempArray);
-    // console.log(lowTempArray);
-
-    // var margin = {top: 30, right: 40, bottom: 30, left: 50},
-    // width = 600 - margin.left - margin.right,
-    // height = 270 - margin.top - margin.bottom;
 
     let dotsContainer =
     d3.select('#holder2').append('svg').attr('width', 500).attr('height', 200);
@@ -180,16 +159,6 @@ export default Ember.Component.extend({
     .attr('r', cloudsArray[15])
     .duration(1000)
     .style('fill','rgb(' + highTempArray[15] + ', 0, ' + (256 - lowTempArray[15]) + ')');
-
-    // .attr('cx',250)
-    // .attr('cy',250)
-    // .attr('r', 100)
-    // .style('fill','blue')
-    // .transition()
-    // .attr('cx',500)
-    // .attr('cy',450)
-    // .duration(2000)
-    // .style('fill','red');
 
   },
 });
