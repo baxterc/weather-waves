@@ -4,7 +4,7 @@
 
 
 
-<h3>Showing wind for {{weather.name}} -- {{to-mph weather.wind.speed}}MPH from {{weather.wind.deg}}</h3>
+<h3>Showing wind for {{weather.name}} -- {{to-mph weather.wind.speed}}MPH from the {{wind-direction weather.wind.deg}} ({{weather.wind.deg}})</h3>
 <button {{action 'generateWind'}}>Generate Wind</button>
 <br>
 <label for="city">Enter a city below (without spaces)</label>
