@@ -14,16 +14,17 @@ export default Ember.Component.extend({
         let svgContainer = d3.select('#holder').append('svg').attr('width',window.innerWidth).attr('height',(window.innerHeight - 300));
         var i = 1;
 
-        while (i++ < 400) {
+        while (i++ < 500) {
           var startX = (Math.random()-Math.random())*window.innerWidth;
           var startY = (Math.random())*window.innerHeight;
           var radius = Math.random()*10;
+          var fullRgb = 'rgb(' + String(Math.floor(Math.random()*255)) + ', ' + String(Math.floor(Math.random()*255)) + ', ' + String(Math.floor(Math.random()*255)) + ')';
           svgContainer.append('rect')
           .attr('x',startX)
           .attr('y',startY)
           .attr('width', radius)
           .attr('height', radius)
-          .style('fill','green')
+          .style('fill',fullRgb)
           .transition()
           .attr('x', startX - (((windSpeed * 60) * Math.cos(windRad))/(radius/120)) )
           .attr('y', startY + (((windSpeed * 60) * Math.sin(windRad))/(radius/120)) )
