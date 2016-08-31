@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import d3 from 'd3';
 
 export default Ember.Component.extend({
 
@@ -16,10 +17,18 @@ export default Ember.Component.extend({
       //console.log((model.list[i].clouds));
       humidityArray.push(model.list[i].humidity * 6 + 100);
       // console.log(model.list[i].humidity);
-      windArray.push(model.list[i].speed * 500);
+      windArray.push(model.list[i].speed * 200);
+      //console.log(model.list[i].speed);
       // tempArray.push(((model.list[i].temp.day) * (9/5)) - 459.67);
-      highTempArray.push(parseInt((model.list[i].temp.max * 4).toString().slice(2,4)) * 3);
-      lowTempArray.push(parseInt((model.list[i].temp.min * 4).toString().slice(2,4)) * 3);
+      //highTempArray.push(parseInt((model.list[i].temp.max * 4).toString().slice(2,4)) * 3);
+      highTempArray.push((model.list[i].temp.max - 55));
+      // console.log("high temp in Kelvin is: " + model.list[i].temp.max);
+      // console.log("high temp color value is: " + (model.list[i].temp.max - 55));
+      // lowTempArray.push(parseInt((model.list[i].temp.min * 4).toString().slice(2,4)) * 3);
+      lowTempArray.push((model.list[i].temp.min - 180));
+      // console.log("low temp in Kelvin is: " + model.list[i].temp.min);
+      console.log('low temp color val is: ' + (256 - (model.list[i].temp.min - 180)));
+      console.log('high temp color val is: ' + (model.list[i].temp.max - 55));
     }
     // console.log(cloudsArray);
     // console.log(humidityArray);
@@ -37,23 +46,23 @@ export default Ember.Component.extend({
     dotsContainer.append('circle')
     .attr('cy', 80)
     .attr('cx', 120)
-    .attr('r', 10)
+    .attr('r', 10);
 
     dotsContainer.append('circle')
     .attr('cy', 80)
     .attr('cx', 180)
-    .attr('r', 30)
+    .attr('r', 30);
 
     dotsContainer.append('circle')
     .attr('cy', 80)
     .attr('cx', 300)
-    .attr('r', 70)
+    .attr('r', 70);
 
-    let svgContainer = d3.select('#holder').append('svg').attr('width',1500).attr('height',1000);
+    let svgContainer = d3.select('#holder').append('svg').attr('width',2000).attr('height',1000);
 
     var axisScale = d3.scale.linear()
-    .domain([0,3])
-    .range([5,1445]);
+    .domain([0,6])
+    .range([5,1980]);
 
     var xAxis = d3.svg.axis()
     .scale(axisScale);
@@ -65,7 +74,7 @@ export default Ember.Component.extend({
 
     var yAxisScale = d3.scale.linear()
     .domain([0,100])
-    .range([0, 1500])
+    .range([0, 1500]);
 
     var yAxis = d3.svg.axis()
     .orient("left")
@@ -182,5 +191,5 @@ export default Ember.Component.extend({
     // .duration(2000)
     // .style('fill','red');
 
-  }
+  },
 });
