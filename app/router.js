@@ -8,6 +8,7 @@ const Router = Ember.Router.extend({
 
 Router.map(function() {
   this.route('city-comparison');
+  this.route('scatter-map');
 });
 
 export default Router;

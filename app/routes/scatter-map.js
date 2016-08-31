@@ -8,14 +8,5 @@ export default Ember.Route.extend({
       console.log(responseJSON.wind.deg);
       return responseJSON;
     });
-  },
-
-  actions: {
-    getLoc: function() {
-      navigator.geolocation.getCurrentPosition(function(position) {
-        // console.log(position.coords.latitude, position.coords.longitude);
-        return {lat: position.coords.latitude, long: position.coords.longitude};
-      });
-    }
   }
 });
