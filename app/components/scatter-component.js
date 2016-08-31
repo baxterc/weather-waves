@@ -3,11 +3,12 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   actions: {
     generateScatter() {
-      var tempMax = Math.floor(this.get('model.main.temp_max'));
-      var tempMin = Math.floor(this.get('model.main.temp_min'));
-      var tempGreen = Math.floor(this.get('model.main.temp_max') - this.get('model.main.temp_min'));
-      var humidity = Math.floor(this.get('model.main.humidity'));
-      var clouds = Math.floor(this.get('model.clouds.all'));
+      var model = this.get('model');
+      var tempMax = Math.floor(model.list[1].main.temp_max);
+      var tempMin = Math.floor(model.list[1].main.temp_min);
+      var tempGreen = Math.floor(model.list[1].main.temp_max - model.list[1].main.temp_min);
+      var humidity = Math.floor(model.list[1].main.humidity);
+      var clouds = Math.floor(model.list[1].clouds.all);
       var redIncrement = Math.floor(tempMax / 144);
       var blueIncrement = Math.floor(tempMin / 144);
       var red = 0;
