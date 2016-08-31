@@ -1,9 +1,13 @@
+
 <div id="holder">
   {{userWeather}}
 </div>
-<button {{action 'weatherNow'}}>Weather Now</button>
 
-<label for="city">Enter a city (without spaces)</label>
+<button {{action 'generateWind'}}>Generate Wind</button>
+
+<h3>Showing wind for {{weather.name}}</h3>
+<br>
+<label for="city">Enter a city below (without spaces)</label>
 {{input value=city id="city"}}
 <button {{action 'citySearch'}}>Get Weather</button>
-{{weather.cod}}
+<button {{action 'weatherNow'}}>Show Model</button>

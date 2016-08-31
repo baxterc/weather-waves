@@ -28,7 +28,7 @@ export default Ember.Route.extend({
 
     citySearch: function(params){
       console.log(params.name);
-      this.transitionTo('city', params);
+      this.transitionTo('city', params.name);
     },
   }
 });
