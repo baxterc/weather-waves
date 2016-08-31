@@ -1,11 +1,10 @@
 
 <div id="holder">
-  {{userWeather}}
 </div>
 
 
 
-<h3>Showing wind for {{weather.name}}</h3>
+<h3>Showing wind for {{weather.name}} -- {{to-mph weather.wind.speed}}MPH from {{weather.wind.deg}}</h3>
 <button {{action 'generateWind'}}>Generate Wind</button>
 <br>
 <label for="city">Enter a city below (without spaces)</label>

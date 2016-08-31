@@ -5,27 +5,31 @@ export default Ember.Component.extend({
 
   actions: {
     generateWind() {
-      document.getElementById("holder").innerHTML = "";
-      var windRad = (90-this.get('weather.wind.deg')) * (Math.PI/180) ;
-      let svgContainer = d3.select('#holder').append('svg').attr('width',700).attr('height',700);
-      var i = 1;
+      if (!this.get('weather.wind.speed')) {
+        return
+      } else {
+        document.getElementById("holder").innerHTML = "";
+        var windRad = (90-this.get('weather.wind.deg')) * (Math.PI/180) ;
+        var windSpeed = this.get('weather.wind.speed');
+        let svgContainer = d3.select('#holder').append('svg').attr('width',700).attr('height',700);
+        var i = 1;
 
-      while (i++ < 25) {
-        var startX = Math.random()*700;
-        var startY = Math.random()*700;
-        var radius = Math.random()*100;
-        svgContainer.append('circle')
-        .attr('cx',startX)
-        .attr('cy',startY)
-        .attr('r', radius)
-        .style('fill','blue')
-        .transition()
-        .attr('cx', startX - ((100 * Math.cos(windRad))/(radius/100)) )
-        .attr('cy', startY + ((100 * Math.sin(windRad))/(radius/100)) )
-        .duration(2000)
-        .style('fill','red');
+        while (i++ < 25) {
+          var startX = Math.random()*700;
+          var startY = Math.random()*700;
+          var radius = Math.random()*80;
+          svgContainer.append('rect')
+          .attr('x',startX)
+          .attr('y',startY)
+          .attr('width', radius)
+          .attr('height', radius)
+          .style('fill','green')
+          .transition()
+          .attr('x', startX - (((windSpeed * 60) * Math.cos(windRad))/(radius/120)) )
+          .attr('y', startY + (((windSpeed * 60) * Math.sin(windRad))/(radius/120)) )
+          .duration(5000);
+        }
       }
-
     },
     weatherNow: function() {
       console.log(this.get('weather'));
