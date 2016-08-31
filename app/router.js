@@ -13,6 +13,8 @@ Router.map(function() {
   this.route('city-comparison');
   this.route('scatter-map');
   this.route('moving-dot');
+  this.route('clouds-humidity-scatter', {path: '/clouds-humidity-scatter/:cityName'});
+  this.route('clouds-scatter-form');
 });
 
 export default Router;
