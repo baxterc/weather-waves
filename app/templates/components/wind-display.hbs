@@ -1,0 +1,9 @@
+<div id="holder">
+  {{userWeather}}
+</div>
+<button {{action 'weatherNow'}}>Weather Now</button>
+
+<label for="city">Enter a city (without spaces)</label>
+{{input value=city id="city"}}
+<button {{action 'citySearch'}}>Get Weather</button>
+{{weather.cod}}

@@ -7,7 +7,7 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
-  this.route('city', {path: '/city/:city'});
+  this.route('city', {path: '/city/:name'});
 });
 
 export default Router;

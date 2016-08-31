@@ -21,7 +21,7 @@ export default Ember.Route.extend({
     return Ember.$.getJSON('http://api.openweathermap.org/data/2.5/weather?lat=45.5205043&lon=-122.70734900000001&appid=47c99ae9b1f7f7412bba0f762a2b3c68').then(function(responseJSON) {
       console.log(responseJSON);
       return responseJSON;
-    })
+    });
   },
 
   actions: {
@@ -32,7 +32,7 @@ export default Ember.Route.extend({
     },
 
     citySearch: function(params){
-      console.log(params);
+      console.log(params.name);
       this.transitionTo('city', params);
     },
   }
