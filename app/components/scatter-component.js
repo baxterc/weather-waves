@@ -1,8 +1,33 @@
 import Ember from 'ember';
+import d3 from 'd3';
 
 export default Ember.Component.extend({
   actions: {
+    generateBar() {
+      var highTemps = [];
+      var lowTemps = [];
+      console.log('PING')
+      var model = this.get('model');
+      var margin = { top: 20, right: 20, bottom: 20, left: 20 };
+      var width = 200 - margin.left - margin.right;
+      var height = 600 - margin.top - margin.bottom;
+      let svgContainer =
+      d3.select('#barHolder').append('svg').attr('width', 200).attr('height', 700);
+      for (var i = 0; i < model.list.length; i++ ) {
+        highTemps.push(model.list[i].main.temp_max);
+        lowTemps.push(model.list[i].main.temp_min);
+        console.log('highTemps[i]')
+        svgContainer.append('rect')
+        .attr('x', 20)
+        .attr('y', 20)
+        .attr('width', 25)
+        .attr('height', highTemps)
+        .style('fill', 'rgb(100,200,100)')
+      };
 
+
+
+    },
     generateScatter() {
       var model = this.get('model');
       var tempMax = Math.floor(model.list[1].main.temp_max);
@@ -41,12 +66,4 @@ export default Ember.Component.extend({
       }
     }
   },
-  generateBar() {
-    var highTemps = [];
-    var lowTemps = [];
-    var model = this.get('model');
-    for (var i = 0; i < model.list.length; i++ ) {
-      
-    }
-  }
 });
