@@ -1,202 +1,44 @@
 import Ember from 'ember';
 import d3 from 'd3';
 
-
 export default Ember.Component.extend({
-
   didInsertElement() {
-    var model = this.get('model');
-    // console.log(model);
-    var cloudsArray = [];
-    var humidityArray = [];
-    var windArray = [];
-    var highTempArray = [];
-    var lowTempArray = [];
-    console.log(model);
-    for (var i = 0; i < model.list.length; i++) {
-      cloudsArray.push((model.list[i].clouds * 3) + 10);
-      console.log((model.list[i].clouds));
-      humidityArray.push(model.list[i].humidity * 6 + 100);
-      // console.log(model.list[i].humidity);
-      windArray.push(model.list[i].speed * 500);
-      // tempArray.push(((model.list[i].temp.day) * (9/5)) - 459.67);
-      highTempArray.push(parseInt((model.list[i].temp.max * 4).toString().slice(2,4)) * 3);
-      lowTempArray.push(parseInt((model.list[i].temp.min * 4).toString().slice(2,4)) * 3);
-    }
-    // console.log(cloudsArray);
-    // console.log(humidityArray);
-    // console.log(windArray);
-    // console.log(highTempArray);
-    // console.log(lowTempArray);
-
-    // var margin = {top: 30, right: 40, bottom: 30, left: 50},
-    // width = 600 - margin.left - margin.right,
-    // height = 270 - margin.top - margin.bottom;
-
-    let dotsContainer =
-    d3.select('#holder2').append('svg').attr('width', 500).attr('height', 200);
-
-    dotsContainer.append('circle')
-    .attr('cy', 80)
-    .attr('cx', 120)
-    .attr('r', 10)
-
-    dotsContainer.append('circle')
-    .attr('cy', 80)
-    .attr('cx', 180)
-    .attr('r', 30)
-
-    dotsContainer.append('circle')
-    .attr('cy', 80)
-    .attr('cx', 300)
-    .attr('r', 70)
-
-    let svgContainer = d3.select('#holder').append('svg').attr('width',1500).attr('height',1000);
-
-    var axisScale = d3.scale.linear()
-    .domain([0,3])
-    .range([5,1445]);
-
-    var xAxis = d3.svg.axis()
-    .scale(axisScale);
-
-    var xAxisGroup = svgContainer.append("g")
-    .call(xAxis);
-
-
-
-    var yAxisScale = d3.scale.linear()
-    .domain([0,100])
-    .range([0, 1500])
-
-    var yAxis = d3.svg.axis()
-    .orient("left")
-    .scale(yAxisScale);
-
-    var yAxisGroup = svgContainer.append("g")
-    .attr("transform", "translate(100,0)")
-    .call(yAxis);
-
-
+    var windDeg = this.get('model.wind.deg');
+    let svgContainer = d3.select('#holder').append('svg').attr('width',600).attr('height',300);
     svgContainer.append('circle')
-    .attr('cy', humidityArray[0])
-    .attr('cx', windArray[0])
-    .attr('r', cloudsArray[0])
-    .style('fill','rgb(' + highTempArray[0] + ', 0, ' + (256 - lowTempArray[0]) + ')')
+    .attr('cx',125)
+    .attr('cy',100)
+    .attr('r', 80)
+    .style("stroke", "orange")
+    .style('fill','blue')
     .transition()
-    .attr('cy', humidityArray[1])
-    .attr('cx', windArray[1])
-    .attr('r', cloudsArray[1])
-    .duration(1000)
-    .style('fill','rgb(' + highTempArray[1] + ', 0, ' + (256 - lowTempArray[1]) + ')')
-    .transition()
-    .attr('cy', humidityArray[2])
-    .attr('cx', windArray[2])
-    .attr('r', cloudsArray[2])
-    .duration(1000)
-    .style('fill','rgb(' + highTempArray[2] + ', 0, ' + (256 - lowTempArray[2]) + ')')
-    .transition()
-    .attr('cy', humidityArray[3])
-    .attr('cx', windArray[3])
-    .attr('r', cloudsArray[3])
-    .duration(1000)
-    .style('fill','rgb(' + highTempArray[3] + ', 0, ' + (256 - lowTempArray[3]) + ')')
-    .transition()
-    .attr('cy', humidityArray[4])
-    .attr('cx', windArray[4])
-    .attr('r', cloudsArray[4])
-    .duration(1000)
-    .style('fill','rgb(' + highTempArray[4] + ', 0, ' + (256 - lowTempArray[4]) + ')')
-    .transition()
-    .attr('cy', humidityArray[5])
-    .attr('cx', windArray[5])
-    .attr('r', cloudsArray[5])
-    .duration(1000)
-    .style('fill','rgb(' + highTempArray[5] + ', 0, ' + (256 - lowTempArray[5]) + ')')
-    .transition()
-    .attr('cy', humidityArray[6])
-    .attr('cx', windArray[6])
-    .attr('r', cloudsArray[6])
-    .duration(1000)
-    .style('fill','rgb(' + highTempArray[6] + ', 0, ' + (256 - lowTempArray[6]) + ')')
-    .transition()
-    .attr('cy', humidityArray[7])
-    .attr('cx', windArray[7])
-    .attr('r', cloudsArray[7])
-    .duration(1000)
-    .style('fill','rgb(' + highTempArray[7] + ', 0, ' + (256 - lowTempArray[7]) + ')')
-    .transition()
-    .attr('cy', humidityArray[8])
-    .attr('cx', windArray[8])
-    .attr('r', cloudsArray[8])
-    .duration(1000)
-    .style('fill','rgb(' + highTempArray[8] + ', 0, ' + (256 - lowTempArray[8]) + ')')
-    .transition()
-    .attr('cy', humidityArray[9])
-    .attr('cx', windArray[9])
-    .attr('r', cloudsArray[9])
-    .duration(1000)
-    .style('fill','rgb(' + highTempArray[9] + ', 0, ' + (256 - lowTempArray[9]) + ')')
-    .transition()
-    .attr('cy', humidityArray[10])
-    .attr('cx', windArray[10])
-    .attr('r', cloudsArray[10])
-    .duration(1000)
-    .style('fill','rgb(' + highTempArray[10] + ', 0, ' + (256 - lowTempArray[10]) + ')')
-    .transition()
-    .attr('cy', humidityArray[11])
-    .attr('cx', windArray[11])
-    .attr('r', cloudsArray[11])
-    .duration(1000)
-    .style('fill','rgb(' + highTempArray[11] + ', 0, ' + (256 - lowTempArray[11]) + ')')
-    .transition()
-    .attr('cy', humidityArray[12])
-    .attr('cx', windArray[12])
-    .attr('r', cloudsArray[12])
-    .duration(1000)
-    .style('fill','rgb(' + highTempArray[12] + ', 0, ' + (256 - lowTempArray[12]) + ')')
-    .transition()
-    .attr('cy', humidityArray[13])
-    .attr('cx', windArray[13])
-    .attr('r', cloudsArray[13])
-    .duration(1000)
-    .style('fill','rgb(' + highTempArray[13] + ', 0, ' + (256 - lowTempArray[13]) + ')')
-    .transition()
-    .attr('cy', humidityArray[14])
-    .attr('cx', windArray[14])
-    .attr('r', cloudsArray[14])
-    .duration(1000)
-    .style('fill','rgb(' + highTempArray[14] + ', 0, ' + (256 - lowTempArray[14]) + ')')
-    .transition()
-    .attr('cy', humidityArray[15])
-    .attr('cx', windArray[15])
-    .attr('r', cloudsArray[15])
-    .duration(1000)
-    .style('fill','rgb(' + highTempArray[15] + ', 0, ' + (256 - lowTempArray[15]) + ')');
+    .attr('cx', 250 * (Math.cos(windDeg)) )
+    .attr('cy', 250 * (Math.sin(windDeg-180)) )
+    .duration(2000)
+    .style('fill','red');
 
-    // .attr('cx',250)
-    // .attr('cy',250)
-    // .attr('r', 100)
-    // .style('fill','blue')
-    // .transition()
-    // .attr('cx',500)
-    // .attr('cy',450)
-    // .duration(2000)
-    // .style('fill','red');
+    // var circle = d3.selectAll("circle");
+    // circle.style("fill", "steelblue");
+    // circle.attr("r", 30);
+    // circle.data([32, 57, 112]);
+    // circle.attr("r", function(d){return Math.sqrt(d);});
+    // circle.attr("cx", function(d, i) { return i * 100 + 30; });
+    // var svg = d3.select('svg');
+    //
+    // var circle = svg.selectAll("circle").data([32, 57, 112, 293]);
+    // var circleEnter = circle.enter().append("circle");
+    // circleEnter.attr("cy", 60);
+    // circleEnter.attr("cx", function(d, i) { return i * 100 + 30; });
+    // circleEnter.attr("r", function(d) { return Math.sqrt(d); });
+    // circleEnter.style('fill', 'steelblue');
 
-  },
-  actions: {
-    getWeather() {
-      console.log(this.get('model'));
-    },
-
-    setCity() {
-      var params = {
-        cityName: this.get('cityName')
-      };
-      // console.log(params.cityName);
-      this.set('cityName', "");
-      this.sendAction('setCity', params);
-    }
+    // This accomplishes entering data if there's none to begin with on the page
+    // svg.selectAll("circle")
+    // .data([32, 57, 112, 293])
+    // .enter().append("circle")
+    // .attr("cy", 60)
+    // .attr("cx", function(d, i) { return i * 100 + 30; })
+    // .attr("r", function(d) { return Math.sqrt(d); });
+    //
   }
 });
