@@ -8,6 +8,7 @@ const Router = Ember.Router.extend({
 
 Router.map(function() {
   this.route('city', {path: '/city/:name'});
+  this.route('wind-plot');
 });
 
 export default Router;
