@@ -132,7 +132,6 @@ export default Ember.Component.extend({
         name: this.get('city')
       };
       document.getElementById("holder").innerHTML = "";
-      console.log(params);
       this.sendAction('citySearch', params);
     }
   }
