@@ -25,25 +25,7 @@ export default Ember.Component.extend({
 
     var padding = 90;
 
-    let dotsContainer =
-    d3.select('#holder2').append('svg').attr('width', 500).attr('height', 200);
-
-    dotsContainer.append('circle')
-    .attr('cy', 80)
-    .attr('cx', 120)
-    .attr('r', 10);
-
-    dotsContainer.append('circle')
-    .attr('cy', 80)
-    .attr('cx', 180)
-    .attr('r', 30);
-
-    dotsContainer.append('circle')
-    .attr('cy', 80)
-    .attr('cx', 300)
-    .attr('r', 70);
-
-    let svgContainer = d3.select('#holder').append('svg').attr('width',1000).attr('height',700);
+    let svgContainer = d3.select('#holder').append('svg').attr('width',1000).attr('height',600);
 
     var xScale = d3.scale.linear()
     .domain([0, d3.max(windArray, function(d) {
@@ -187,6 +169,16 @@ export default Ember.Component.extend({
     .attr('r', rScale(cloudsArray[15]))
     .duration(1000)
     .style('fill','rgb(' + Math.floor(highTempScale(highTempArray[15])) + ', 0, ' + (255 - Math.floor(lowTempScale(lowTempArray[15]))) + ')');
+
+    svgContainer.append("text")
+      .attr("text-anchor", "middle")
+      .attr("transform", "translate(500, " + (600 - (padding/3))  +  ")")
+      .text("Wind Speed");
+
+    svgContainer.append("text")
+      .attr("text-anchor", "middle")
+      .attr("transform", "translate("+ (padding/2) +","+ 300 +")rotate(-90)")
+      .text("Rainfall in inches");
 
   },
 });

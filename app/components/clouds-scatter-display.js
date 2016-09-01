@@ -8,7 +8,7 @@ export default Ember.Component.extend({
 
     var dataset = [];
     for (var i = 0; i < model.list.length; i++) {
-      var tempArray = [ model.list[i].clouds.all, model.list[i].main.humidity, model.list[i].main.temp, model.list[i] ];
+      var tempArray = [ model.list[i].dt, model.list[i].main.humidity, model.list[i].main.temp, model.list[i].clouds.all ];
       dataset.push(tempArray);
     }
 
@@ -18,27 +18,24 @@ export default Ember.Component.extend({
     var padding = 30;
 
     var xScale = d3.scale.linear()
-    .domain([0, d3.max(dataset, function(d) {
+    .domain([d3.min(dataset, function(d) {
+      return d[0];
+    }), d3.max(dataset, function(d) {
       return d[0];
       })
     ])
     .range([padding, w - padding * 2]);
 
     var yScale = d3.scale.linear()
-    .domain([d3.min(dataset, function(d) {
-      return d[1];
-    }), d3.max(dataset, function(d) {
+    .domain([0, d3.max(dataset, function(d) {
       return d[1];
       })
     ])
     .range([h - padding, padding]);
 
     var rScale = d3.scale.linear()
-      .domain([0, d3.max(dataset, function(d) {
-        return d[1];
-        })
-      ])
-      .range([2, 5]);
+      .domain([0, 100])
+      .range([2, 10]);
 
     var tempScale = d3.scale.linear()
       .domain([d3.min(dataset, function(d) {
@@ -53,19 +50,19 @@ export default Ember.Component.extend({
     var xAxis = d3.svg.axis()
       .scale(xScale)
       .orient("bottom")
-      .ticks(5);
+      .ticks(0);
 
     var yAxis = d3.svg.axis()
       .scale(yScale)
       .orient("left")
       .ticks(5);
 
-    var svg = d3.select("body")
+    var svgContainer = d3.select("#holder")
     .append("svg")
     .attr("width", w)
     .attr("height", h);
 
-    svg.selectAll("circle")
+    svgContainer.selectAll("circle")
     .data(dataset)
     .enter()
     .append("circle")
@@ -74,19 +71,30 @@ export default Ember.Component.extend({
       cy: function(d) { return yScale(d[1]); },
       width: w / dataset.length - barPadding,
       fill: function(d) {
-        return "rgb(" + Math.floor(tempScale((d[2]))) + ", 0, 0)";
+        return "rgb(" + Math.floor(tempScale((d[2]))) + ", 0, " +(255 - Math.floor(tempScale((d[2])))) + ")";
       },
       r: function(d) { return rScale(d[1]); }
     });
 
-    svg.append("g")
+    svgContainer.append("g")
       .attr("class", "axis")
       .attr("transform", "translate(0," + (h - padding) + ")")
       .call(xAxis);
 
-    svg.append("g")
+    svgContainer.append("g")
       .attr("class", "axis")
       .attr("transform", "translate(" + padding + ",0)")
       .call(yAxis);
- }
+
+      svgContainer.append("text")
+      .attr("text-anchor", "middle")
+      .attr("transform", "translate("+ (padding/2) +","+ (h/2) +")rotate(-90)")
+      .text("Humidity");
+
+    svgContainer.append("text")
+      .attr("text-anchor", "middle")
+      .attr("transform", "translate("+ (w/2) +", " + (h - (padding/3))  +  ")")
+      .text("Time");
+
+ },
 });
