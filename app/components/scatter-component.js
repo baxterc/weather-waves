@@ -4,7 +4,7 @@ import d3 from 'd3';
 export default Ember.Component.extend({
   actions: {
     generateBar() {
-      console.log('Beep');
+
       var highTemps = [];
       var lowTemps = [];
       var model = this.get('model');
@@ -12,7 +12,18 @@ export default Ember.Component.extend({
         highTemps.push(model.list[i].main.temp_max);
         lowTemps.push(model.list[i].main.temp_min);
       }
-      console.log('Ping');
+
+      for (var j = 0; j < 5; j++) {
+        d3.select('#barHolder')
+        .append('div')
+        .text('Day ' + j + ' ~ ' + highTemps[j] + " Kelvin")
+        .attr("class", "top-bar")
+        .transition()
+        .style('background-color', "#222")
+        .style('color', "white")
+        .duration(2000);
+      };
+
       d3.select('#barHolder').selectAll('div')
       .data(highTemps)
       .enter()
@@ -26,11 +37,16 @@ export default Ember.Component.extend({
       })
       .duration(6000);
 
-      console.log('Pong');
-      d3.select('#barHolder').selectAll('div')
+      d3.select('#barHolder').selectAll('.bar')
       .append('div')
+      .style('background-color', "white")
+      .style('color', "white")
       .text('3 Hrs')
-      .attr("class", "label");
+      .attr("class", "label")
+      .transition()
+      .style('background-color', "#222")
+      .style('color', "white")
+      .duration(8000);
 
 
     },
