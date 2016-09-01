@@ -11,9 +11,8 @@ export default Ember.Route.extend({
 
   actions: {
     citySearch: function(params){
-      this.transitionTo('city', params.name).then(function(){
-        window.location.reload('true');
-      })
+      this.transitionTo('city', params.name);
+      window.location.href = "/city/" + params.name;
     }
   }
 });
