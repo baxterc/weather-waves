@@ -11,9 +11,19 @@ export default Ember.Component.extend({
       for (var i = 0; i < model.list.length; i++ ) {
         highTemps.push(model.list[i].main.temp_max);
         lowTemps.push(model.list[i].main.temp_min);
-        console.log(model.list[i].main.temp_max + 'max')
-        console.log(model.list[i].main.temp_min + 'min')
+      }
+
+      for (var j = 0; j < 5; j++) {
+        d3.select('#barHolder')
+        .append('div')
+        .text('Day ' + j + ' ~ ' + highTemps[j] + " Kelvin")
+        .attr("class", "top-bar")
+        .transition()
+        .style('background-color', "#222")
+        .style('color', "white")
+        .duration(2000);
       };
+
       d3.select('#barHolder').selectAll('div')
       .data(highTemps)
       .enter()
@@ -22,11 +32,21 @@ export default Ember.Component.extend({
       .style('background-color', 'darkred')
       .transition()
       .style("height", function(d) {
-          var barHeight = d * 8 - 2100
-          return barHeight + "px"
+          var barHeight = d * 8 - 2100;
+          return barHeight + "px";
       })
-      .duration(8000)
+      .duration(6000);
 
+      d3.select('#barHolder').selectAll('.bar')
+      .append('div')
+      .style('background-color', "white")
+      .style('color', "white")
+      .text('3 Hrs')
+      .attr("class", "label")
+      .transition()
+      .style('background-color', "#222")
+      .style('color', "white")
+      .duration(8000);
 
 
     },
@@ -60,7 +80,8 @@ export default Ember.Component.extend({
         .attr('r', clouds)
         .duration(8000)
         .transition()
-        .remove();
+        .remove()
+        .duration(8000);
         blue -= Math.floor(blueIncrement);
         red += Math.floor(redIncrement / 2);
         radius = (red + blue) / 4;
