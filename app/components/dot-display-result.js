@@ -11,12 +11,8 @@ export default Ember.Component.extend({
     var highTempArray = [];
     var lowTempArray = [];
     var rainArray = [];
-    console.log(model);
     for (var i = 0; i < model.list.length; i++) {
-    //  cloudsArray.push((model.list[i].clouds * 3) + 10);
       cloudsArray.push(model.list[i].clouds);
-    //  humidityArray.push(model.list[i].humidity * 6 + 100);
-    //  humidityArray.push(model.list[i].humidity);
       windArray.push(model.list[i].speed);
       highTempArray.push(model.list[i].temp.max);
       lowTempArray.push(model.list[i].temp.min);
@@ -27,8 +23,7 @@ export default Ember.Component.extend({
       }
     }
 
-    console.log(highTempArray);
-    console.log(lowTempArray);
+    var padding = 90;
 
     let dotsContainer =
     d3.select('#holder2').append('svg').attr('width', 500).attr('height', 200);
@@ -48,45 +43,38 @@ export default Ember.Component.extend({
     .attr('cx', 300)
     .attr('r', 70);
 
-    let svgContainer = d3.select('#holder').append('svg').attr('width',1000).attr('height',500);
+    let svgContainer = d3.select('#holder').append('svg').attr('width',1000).attr('height',700);
 
     var xScale = d3.scale.linear()
     .domain([0, d3.max(windArray, function(d) {
       return d;
       })
     ])
-    .range([5,980]);
+    .range([padding, 1000 - padding]);
 
     var xAxis = d3.svg.axis()
     .scale(xScale);
 
     var xAxisGroup = svgContainer.append("g")
+    .attr("class", "axis")
+    .attr("transform", "translate(0, " + (600 - padding) + ")")
     .call(xAxis);
-
-
 
     var yAxisScale = d3.scale.linear()
     .domain([0, d3.max(rainArray, function(d) {
       return d;
       })
     ])
-    .range([490, 5]);
+    .range([600 - padding, padding]);
 
     var yAxis = d3.svg.axis()
     .orient("left")
     .scale(yAxisScale);
 
     var yAxisGroup = svgContainer.append("g")
-    .attr("transform", "translate(100,0)")
+    .attr("class", "axis")
+    .attr("transform", "translate(" + padding + ", 0)")
     .call(yAxis);
-
-    // var highTempScale = d3.scale.linear()
-    //   .domain([d3.min(highTempArray, function(d) {
-    //     return d;
-    //   }), d3.max(highTempArray, function(d) {
-    //     return d;
-    //   })
-    // ]).range([0, 255]);
 
     var highTempScale = d3.scale.linear()
       .domain([280, 315])
@@ -102,7 +90,7 @@ export default Ember.Component.extend({
 
     var rScale = d3.scale.linear()
       .domain([0, 100])
-      .range([10, 130]);
+      .range([10, 90]);
 
     svgContainer.append('circle')
     .attr('cy', yAxisScale(rainArray[0]))
