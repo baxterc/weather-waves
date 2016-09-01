@@ -29,18 +29,25 @@ div .bar2 {
     font-size: 11px;
 }
 .map-display {
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    top: 64px;
-    left: 0;
-    z-index: 0;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  z-index: 1;
 }
 
 .weather-display {
   position: absolute;
-  bottom: 0;
-  z-index: 1;
+  top: 64px;
+  bottom: 0px;
+  z-index: 2;
+}
+
+#birdseye-bar {
+  right: 0px;
+  width: 240px;
+  position: absolute;
+  z-index: 2;
 }
 
 svg {

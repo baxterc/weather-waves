@@ -1,22 +1,7 @@
 import Ember from 'ember';
-import d3 from 'd3';
 
 export default Ember.Component.extend({
-  map: Ember.inject.service('google-map'),
-
-  didInsertElement() {
-    var container = this.$('.map-display')[0];
-    var options = {
-      center: this.get('map').center(this.get('weather.coord.lat'), this.get('weather.coord.lon')),
-      scrollwheel: false,
-      zoom: 15
-    };
-    console.log(options);
-    var fullMap = this.get('map').findMap(container, options);
-  },
-
   actions: {
-
     generateWeather() {
         document.getElementById("holder").innerHTML = "";
         var windSpeed = 0;
@@ -139,16 +124,5 @@ export default Ember.Component.extend({
           .duration(3000);
         }
     },
-    weatherNow: function() {
-      console.log(this.get('weather'));
-    },
-    citySearch: function() {
-      var params = {
-        name: this.get('city')
-      };
-      document.getElementById("holder").innerHTML = "";
-      this.sendAction('citySearch', params);
-    }
-
   }
 });
