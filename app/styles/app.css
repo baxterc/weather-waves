@@ -17,8 +17,38 @@ div .bar2 {
   position: absolute;
 }
 
-#windSpeed {
-  text-align: center;
+.axis path,
+.axis line {
+    fill: none;
+    stroke: black;
+    shape-rendering: crispEdges;
+}
+
+.axis text {
+    font-family: sans-serif;
+    font-size: 11px;
+}
+.map-display {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 64px;
+    left: 0;
+    z-index: 0;
+}
+
+.weather-display {
+  position: absolute;
+  bottom: 0;
+  z-index: 1;
+}
+
+svg {
+  display: none;
+}
+
+svg:last-child {
+  display: block;
 }
 
 #scatter-main {

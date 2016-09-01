@@ -5,16 +5,14 @@
       <div class="form-group">
         <label>Input City:</label>
         {{input class="form-control text_box" type="text" value=inputCity}}
-        <button {{action 'generateScatter' city }}>Generate Daily Heat Visual</button>
+        <button class="waves-effect waves-light btn" {{action 'generateScatter' city }}>Generate Daily Heat Visual</button>
       </div>
       <br>
       <div class="form-group">
-        <button {{action 'generateBar' city }}>Generate Heat Forecast</button>
+        <button class="waves-effect waves-light btn" {{action 'generateBar' city }}>Generate Heat Forecast</button>
       </div>
     </form>
     <br>
   </div>
-  <div id="barHolder" class="col-md-6">
-
-  </div>
+  <div id="barHolder" class="col-md-6"></div>
 </div>

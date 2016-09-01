@@ -1,8 +1,9 @@
-<h1>Input your city:</h1>
+<h4 class="center">City:</h4>
 
 <form>
-  <label for="cityName">City Name:</label>
-  {{input value=cityName id="cityName"}}
-
-  <button {{action 'setCity'}}>Set City</button>
+  <div class="input-field">
+    <label for="cityName">City Name:</label>
+    {{input value=cityName id="cityName"}}
+  </div>
+  <button class="waves-effect waves-light btn" {{action 'setCity'}}>Set City</button>
 </form>
