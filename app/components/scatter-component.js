@@ -6,27 +6,22 @@ export default Ember.Component.extend({
     generateBar() {
       var highTemps = [];
       var lowTemps = [];
-      console.log('PING')
+      console.log('PING');
       var model = this.get('model');
-      var margin = { top: 20, right: 20, bottom: 20, left: 20 };
-      var width = 200 - margin.left - margin.right;
-      var height = 600 - margin.top - margin.bottom;
-      let svgContainer =
-      d3.select('#barHolder').append('svg').attr('width', 200).attr('height', 700);
       for (var i = 0; i < model.list.length; i++ ) {
         highTemps.push(model.list[i].main.temp_max);
         lowTemps.push(model.list[i].main.temp_min);
-        console.log('highTemps[i]')
-        svgContainer.append('rect')
-        .attr('x', 20)
-        .attr('y', 20)
-        .attr('width', 25)
-        .attr('height', highTemps)
-        .style('fill', 'rgb(100,200,100)')
-      };
-
-
-
+        console.log('highTemps[i]');
+      }
+      d3.select('#barHolder').selectAll("div")
+      .data(highTemps)
+      .enter()
+      .append('div')
+      .attr("class", "bar")
+      .style("height", function(d) {
+          var barHeight = d * 8 - 2000;
+          return barHeight + "px";
+      });
     },
     generateScatter() {
       var model = this.get('model');
@@ -59,7 +54,7 @@ export default Ember.Component.extend({
         .duration(8000)
         .transition()
         .remove()
-        .duration(8000)
+        .duration(8000);
         blue -= Math.floor(blueIncrement);
         red += Math.floor(redIncrement / 2);
         radius = (red + blue) / 4;

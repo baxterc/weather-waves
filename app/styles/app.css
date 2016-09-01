@@ -2,6 +2,18 @@
   text-align: center;
 }
 
+#scatter-main {
+  width: 90%;
+}
 .text_box {
   border-style: solid;
+}
+
+div.bar {
+    display: inline-block;
+    width: 25px;
+    height: 50px;
+    background-color: #11BB15;
+    margin-right: 7px;
+    margin-left: 7px;
 }
