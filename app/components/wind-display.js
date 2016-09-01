@@ -54,16 +54,16 @@ export default Ember.Component.extend({
         } else if (weatherCode >= 300 &&  weatherCode < 400 || weatherCode === 701) {
           //Drizzle
           while (r++ < 200 * (window.innerWidth/1080)){
-            var startX = Math.random()*window.innerWidth;
-            var startY = Math.random()*window.innerHeight;
-            var radius = 5 * Math.random();
+            var startXDriz = Math.random()*window.innerWidth;
+            var startYDriz = Math.random()*window.innerHeight;
+            var radiusDriz = 5 * Math.random();
             svgContainer.append('circle')
-            .attr('cx',startX)
-            .attr('cy',startY)
-            .attr('r',radius)
+            .attr('cx',startXDriz)
+            .attr('cy',startYDriz)
+            .attr('r',radiusDriz)
             .style('fill', 'blue')
             .transition()
-            .attr('cy', startY+40)
+            .attr('cy', startYDriz+40)
             .attr('r',0)
             .duration(1000)
             .ease('linear');
@@ -71,16 +71,16 @@ export default Ember.Component.extend({
         } else if (weatherCode >= 500 &&  weatherCode < 600) {
           //Rain
           while (r++ < 200 * (window.innerWidth/1080)){
-            var startX = Math.random()*window.innerWidth;
-            var startY = Math.random()*window.innerHeight;
-            var radius = 5 * Math.random();
+            var startXRain = Math.random()*window.innerWidth;
+            var startYRain = Math.random()*window.innerHeight;
+            var radiusRain = 5 * Math.random();
             svgContainer.append('circle')
-            .attr('cx',startX)
-            .attr('cy',startY)
-            .attr('r',radius)
+            .attr('cx',startXRain)
+            .attr('cy',startYRain)
+            .attr('r',radiusRain)
             .style('fill', 'blue')
             .transition()
-            .attr('cy', startY+40)
+            .attr('cy', startYRain+40)
             .attr('r',0)
             .duration(1000)
             .ease('linear');
@@ -88,16 +88,16 @@ export default Ember.Component.extend({
         } else if (weatherCode >= 600 &&  weatherCode < 700) {
           //Snow
           while (r++ < 200 * (window.innerWidth/1080)){
-            var startX = Math.random()*window.innerWidth;
-            var startY = Math.random()*window.innerHeight;
-            var radius = 5 * Math.random();
+            var startXSnow = Math.random()*window.innerWidth;
+            var startYSnow = Math.random()*window.innerHeight;
+            var radiusSnow = 5 * Math.random();
             svgContainer.append('circle')
-            .attr('cx',startX)
-            .attr('cy',startY)
-            .attr('r',radius)
+            .attr('cx',startXSnow)
+            .attr('cy',startYSnow)
+            .attr('r',radiusSnow)
             .style('fill', 'white')
             .transition()
-            .attr('cy', startY+40)
+            .attr('cy', startYSnow+40)
             .attr('r',0)
             .duration(3000)
             .ease('linear');
@@ -105,36 +105,37 @@ export default Ember.Component.extend({
         }
 
         while (w++ < 200) {
-          var startX = (Math.random()-Math.random())*window.innerWidth;
-          var startY = (Math.random()-Math.random())*window.innerHeight;
-          var radius = Math.random()*4;
+          //Draws the little "dust" squares to show wind direction when there are few/no clouds
+          var startXBits = (Math.random()-Math.random())*window.innerWidth;
+          var startYBits = (Math.random()-Math.random())*window.innerHeight;
+          var radiusBits = Math.random()*4;
           var fullRgb = 'rgb(' + String(Math.floor(Math.random()*255)) + ', ' + String(Math.floor(Math.random()*255)) + ', ' + String(Math.floor(Math.random()*255)) + ')';
           svgContainer.append('rect')
-          .attr('x',startX)
-          .attr('y',startY)
-          .attr('width', radius)
-          .attr('height', radius)
+          .attr('x',startXBits)
+          .attr('y',startYBits)
+          .attr('width', radiusBits)
+          .attr('height', radiusBits)
           .style('fill',fullRgb)
           .transition()
-          .attr('x', startX - (((windSpeed * 60) * Math.cos(windRad))/(radius/120)) )
-          .attr('y', startY + (((windSpeed * 60) * Math.sin(windRad))/(radius/120)) )
+          .attr('x', startXBits - (((windSpeed * 60) * Math.cos(windRad))/(radiusBits/120)) )
+          .attr('y', startYBits + (((windSpeed * 60) * Math.sin(windRad))/(radiusBits/120)) )
           .duration(3000);
         }
 
         while (c++ < this.get('weather.clouds.all')) {
-          var startX = Math.random()*window.innerWidth;
-          var startY = Math.random()*window.innerHeight;
-          var radius = (2*this.get('weather.clouds.all')) + (Math.random()*(window.innerWidth/30));
+          var startXCloud = Math.random()*window.innerWidth;
+          var startYCloud = Math.random()*window.innerHeight;
+          var radiusCloud = (2*this.get('weather.clouds.all')) + (Math.random()*(window.innerWidth/30));
           svgContainer.append('rect')
-          .attr('x',startX)
-          .attr('y',startY)
-          .attr('width', radius)
-          .attr('height', radius)
+          .attr('x',startXCloud)
+          .attr('y',startYCloud)
+          .attr('width', radiusCloud)
+          .attr('height', radiusCloud)
           .style('fill', 'white')
           .style('opacity', '0.8')
           .transition()
-          .attr('x', startX - (((windSpeed * 60) * Math.cos(windRad))/(radius/120)) )
-          .attr('y', startY + (((windSpeed * 60) * Math.sin(windRad))/(radius/120)) )
+          .attr('x', startXCloud - (((windSpeed * 60) * Math.cos(windRad))/(radiusCloud/120)) )
+          .attr('y', startYCloud + (((windSpeed * 60) * Math.sin(windRad))/(radiusCloud/120)) )
           .duration(3000);
         }
     },
@@ -146,7 +147,7 @@ export default Ember.Component.extend({
         name: this.get('city')
       };
       document.getElementById("holder").innerHTML = "";
-      this.sendAction('citySearch', params)
+      this.sendAction('citySearch', params);
     }
 
   }
