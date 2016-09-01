@@ -8,13 +8,12 @@ export default Ember.Route.extend({
       var cities = ["Birmingham", "Anchorage", "Phoenix", "LittleRock", "LosAngeles", "Denver", "Bridgeport", "Wilmington", "Jacksonville", "Atlanta", "Honolulu", "Boise", "Chicago", "Indianapolis", "DesMoines", "Wichita", "Louisville", "NewOrleans", "Portland", "Baltimore", "Boston", "Detroit", "Minneapolis", "Jackson", "KansasCity", "Billings", "Omaha", "LasVegas", "Manchester", "Newark", "Albuquerque", "NewYorkCity", "Charlotte", "Fargo", "Columbus", "OklahomaCity", "Philadelphia", "Providence", "Columbia", "SiouxFalls", "Memphis", "Houston", "SaltLakeCity", "Burlington", "VirginiaBeach", "Seattle", "Charleston", "Milwakuee", "Cheyenne"];
 
       var tempArray = [];
-      var key = config.apiKey;
       var done = cities.length;
 
 
 
       cities.forEach(function(city){
-        var url = "http://api.openweathermap.org/data/2.5/weather?q=" + city + ",us&appid=" + key;
+        var url = "http://api.openweathermap.org/data/2.5/weather?q=" + city + ",us&appid=89f17c12732050af0fecc7fed7d43c39";
         return Ember.$.getJSON(url).then(function(responseJSON) {
           var fahr = responseJSON.main.temp * (9/5) - 459.67;
           tempArray.push(Math.floor(fahr));
@@ -43,7 +42,7 @@ export default Ember.Route.extend({
             return i * (w/tempArray.length);
           })
           .attr("y", function(d) {
-            return h - d;
+            return h - (d * 3);
           })
           .attr("width", w /tempArray.length - barPadding)
           .attr("height", function(d){
