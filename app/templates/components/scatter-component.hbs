@@ -1,3 +1,18 @@
-<div id="holder">
-  <button class="waves-effect waves-light btn" {{action 'generateScatter'}}>Generate Heat Range</button>
+<div id="scatter-main" class="row">
+  <div id="holder" class="col-md-6">
+    <h5>This will display a range of dots that represent the difference between today's projected minimum and maximum temperature for the selected city. The temperature is represented in color and size. The dots also move to coordinents that correspond to humidity and cloud cover percentages over subsequent intervals (bottom right is greatest amount).</h5>
+    <form>
+      <div class="form-group">
+        <label>Input City:</label>
+        {{input class="form-control text_box" type="text" value=inputCity}}
+        <button class="waves-effect waves-light btn" {{action 'generateScatter' city }}>Generate Daily Heat Visual</button>
+      </div>
+      <br>
+      <div class="form-group">
+        <button class="waves-effect waves-light btn" {{action 'generateBar' city }}>Generate Heat Forecast</button>
+      </div>
+    </form>
+    <br>
+  </div>
+  <div id="barHolder" class="col-md-6"></div>
 </div>

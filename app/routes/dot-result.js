@@ -11,8 +11,8 @@ export default Ember.Route.extend({
 
   actions: {
     setCity(params) {
-      this.transitionTo('dot-result', params.cityName);
-
+      // this.transitionTo('dot-result', params.cityName);
+      window.location.href = '/dot-result/' + params.cityName;
     }
   }
 });
