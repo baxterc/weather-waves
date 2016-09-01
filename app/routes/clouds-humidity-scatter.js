@@ -11,7 +11,6 @@ export default Ember.Route.extend({
 
   actions: {
     setCity(params) {
-      //this.transitionTo('clouds-humidity-scatter', params.cityName);
       window.location.href = '/clouds-humidity-scatter/' + params.cityName;
     }
   }
