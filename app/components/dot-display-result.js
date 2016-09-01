@@ -25,24 +25,6 @@ export default Ember.Component.extend({
 
     var padding = 90;
 
-    let dotsContainer =
-    d3.select('#holder2').append('svg').attr('width', 500).attr('height', 200);
-
-    dotsContainer.append('circle')
-    .attr('cy', 80)
-    .attr('cx', 120)
-    .attr('r', 10);
-
-    dotsContainer.append('circle')
-    .attr('cy', 80)
-    .attr('cx', 180)
-    .attr('r', 30);
-
-    dotsContainer.append('circle')
-    .attr('cy', 80)
-    .attr('cx', 300)
-    .attr('r', 70);
-
     let svgContainer = d3.select('#holder').append('svg').attr('width',1000).attr('height',600);
 
     var xScale = d3.scale.linear()
