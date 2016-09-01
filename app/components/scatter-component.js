@@ -3,12 +3,44 @@ import d3 from 'd3';
 
 export default Ember.Component.extend({
   actions: {
+    generateBar() {
+      console.log('Beep');
+      var highTemps = [];
+      var lowTemps = [];
+      var model = this.get('model');
+      for (var i = 0; i < model.list.length; i++ ) {
+        highTemps.push(model.list[i].main.temp_max);
+        lowTemps.push(model.list[i].main.temp_min);
+      }
+      console.log('Ping');
+      d3.select('#barHolder').selectAll('div')
+      .data(highTemps)
+      .enter()
+      .append('div')
+      .attr("class", "bar")
+      .style('background-color', 'darkred')
+      .transition()
+      .style("height", function(d) {
+          var barHeight = d * 8 - 2100;
+          return barHeight + "px";
+      })
+      .duration(6000);
+
+      console.log('Pong');
+      d3.select('#barHolder').selectAll('div')
+      .append('div')
+      .text('3 Hrs')
+      .attr("class", "label");
+
+
+    },
     generateScatter() {
-      var tempMax = Math.floor(this.get('model.main.temp_max'));
-      var tempMin = Math.floor(this.get('model.main.temp_min'));
-      var tempGreen = Math.floor(this.get('model.main.temp_max') - this.get('model.main.temp_min'));
-      var humidity = Math.floor(this.get('model.main.humidity'));
-      var clouds = Math.floor(this.get('model.clouds.all'));
+      var model = this.get('model');
+      var tempMax = Math.floor(model.list[1].main.temp_max);
+      var tempMin = Math.floor(model.list[1].main.temp_min);
+      var tempGreen = Math.floor(model.list[1].main.temp_max - model.list[1].main.temp_min);
+      var humidity = Math.floor(model.list[1].main.humidity);
+      var clouds = Math.floor(model.list[1].clouds.all);
       var redIncrement = Math.floor(tempMax / 144);
       var blueIncrement = Math.floor(tempMin / 144);
       var red = 0;
@@ -30,6 +62,9 @@ export default Ember.Component.extend({
         .attr('cx', clouds)
         .attr('cy', clouds )
         .attr('r', clouds)
+        .duration(8000)
+        .transition()
+        .remove()
         .duration(8000);
         blue -= Math.floor(blueIncrement);
         red += Math.floor(redIncrement / 2);
