@@ -15,16 +15,6 @@ export default Ember.Component.extend({
   },
 
   actions: {
-    // generateMap() {
-    //   var container = this.$('.map-display')[0];
-    //   console.log('generating map');
-    //   var options = {
-    //     center: this.get('map').center(this.get('weather.coord.lat'), this.get('weather.coord.lon')),
-    //     scrollwheel: false,
-    //     zoom: 8
-    //   };
-    //   this.get('map').findMap(container, options);
-    // },
 
     generateWind() {
       if (!this.get('weather.wind.speed')) {

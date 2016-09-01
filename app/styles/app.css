@@ -1,3 +1,8 @@
 #windSpeed {
   text-align: center;
 }
+
+.map-display {
+    height: 600px;
+    width: 600px;
+}
