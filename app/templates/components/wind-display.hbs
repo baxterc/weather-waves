@@ -1,9 +1,16 @@
-<div id="holder">
-  {{userWeather}}
-</div>
-<button {{action 'weatherNow'}}>Weather Now</button>
+<div class="map-display"></div>
+<div class="weather-display">
+  <div id="holder"></div>
+  <br>
 
-<label for="city">Enter a city (without spaces)</label>
-{{input value=city id="city"}}
-<button {{action 'citySearch'}}>Get Weather</button>
-{{weather.cod}}
+  <h3>Showing wind for {{weather.name}} -- {{to-mph weather.wind.speed}}MPH from the {{wind-direction weather.wind.deg}} ({{weather.wind.deg}})</h3>
+  <button class="waves-effect waves-light btn" {{action 'generateWeather'}}>Display Weather</button>
+  <form>
+    <div class="input-field">
+      <label for="city">Enter a city (without spaces)</label>
+      {{input value=city id="city"}}
+    </div>
+    <button class="waves-effect waves-light btn" {{action 'citySearch'}}>Get Weather</button>
+    <button class="waves-effect waves-light btn" {{action 'weatherNow'}}>Show Model</button>
+  </form>
+</div>

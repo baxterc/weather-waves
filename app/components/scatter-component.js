@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import d3 from 'd3';
 
 export default Ember.Component.extend({
   actions: {
@@ -29,7 +30,7 @@ export default Ember.Component.extend({
         .attr('cx', clouds)
         .attr('cy', clouds )
         .attr('r', clouds)
-        .duration(8000)
+        .duration(8000);
         blue -= Math.floor(blueIncrement);
         red += Math.floor(redIncrement / 2);
         radius = (red + blue) / 4;
