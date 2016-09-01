@@ -51,64 +51,26 @@ export default Ember.Route.extend({
           .attr("fill", function(d) {
             return "rgb(0, 0, " + (d * 2) + ")";
           });
+
+          svgContainer.selectAll("text")
+          .data(tempArray)
+          .enter()
+          .append("text")
+          .text(function(d) {
+            return d;
+          })
+          .attr("x", function(d, i) {
+            return i * (w / dataset.length) + 5;  // +5
+          })
+          .attr("y", function(d) {
+            return h - (d * 4) + 15;              // +15
+          })
+          .attr("font-family", "sans-serif")
+          .attr("font-size", "11px")
+          .attr("fill", "white");
+
         });
       });
-
-
-
-
-      // d3.select("#holder").selectAll("div")
-      // .data(tempArray)
-      // .enter()
-      // .append("div")
-      // .attr("class", "bar")
-      // .style("height", function(d) {
-      //   var barHeight = d;
-      //   return barHeight + "px";
-      // });
-
-
-      // let svgContainer = d3.select('#holder').append('svg')
-      // .attr('width',1000)
-      // .attr('height',750)
-      // .style('background', '#dff0d8')
-      // .selectAll('rect').data(tempArray)
-      // .enter().append('rect')
-      // .style({'fill': '#3c763d', 'stroke': '#d6e9c6', 'stroke-width': '5'})
-      // .attr('width', barWidth)
-      // .attr('height', function (data) {
-      //   return data;
-      // })
-      // .attr('x', function (data, i) {
-      //   return i * (barWidth + barOffset);
-      // })
-      // .attr('y', function (data) {
-      //   return height - data;
-      // });
-
-      // var axisScale = d3.scale.linear()
-      // .domain([0,6])
-      // .range([5,1980]);
-      //
-      // var xAxis = d3.svg.axis()
-      // .scale(axisScale);
-      //
-      // var xAxisGroup = svgContainer.append("g")
-      // .call(xAxis);
-      //
-      //
-      //
-      // var yAxisScale = d3.scale.linear()
-      // .domain([0,100])
-      // .range([0, 1500]);
-      //
-      // var yAxis = d3.svg.axis()
-      // .orient("left")
-      // .scale(yAxisScale);
-      //
-      // var yAxisGroup = svgContainer.append("g")
-      // .attr("transform", "translate(100,0)")
-      // .call(yAxis);
     }
   }
 });
