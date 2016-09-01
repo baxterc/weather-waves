@@ -16,3 +16,11 @@
   bottom: 0;
   z-index: 1;
 }
+
+svg {
+  display: none;
+}
+
+svg:last-child {
+  display: block;
+}

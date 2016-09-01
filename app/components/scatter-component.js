@@ -30,7 +30,7 @@ export default Ember.Component.extend({
         .attr('cx', clouds)
         .attr('cy', clouds )
         .attr('r', clouds)
-        .duration(8000)
+        .duration(8000);
         blue -= Math.floor(blueIncrement);
         red += Math.floor(redIncrement / 2);
         radius = (red + blue) / 4;
