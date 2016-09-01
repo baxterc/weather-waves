@@ -5,10 +5,11 @@ export default Ember.Component.extend({
   didInsertElement() {
 
     var model = this.get('model');
+    console.log(model);
 
     var dataset = [];
     for (var i = 0; i < model.list.length; i++) {
-      var tempArray = [ model.list[i].clouds.all, model.list[i].main.humidity, model.list[i].main.temp, model.list[i] ];
+      var tempArray = [ model.list[i].dt, model.list[i].main.humidity, model.list[i].main.temp, model.list[i].clouds.all ];
       dataset.push(tempArray);
     }
 
@@ -18,27 +19,24 @@ export default Ember.Component.extend({
     var padding = 30;
 
     var xScale = d3.scale.linear()
-    .domain([0, d3.max(dataset, function(d) {
+    .domain([d3.min(dataset, function(d) {
+      return d[0];
+    }), d3.max(dataset, function(d) {
       return d[0];
       })
     ])
     .range([padding, w - padding * 2]);
 
     var yScale = d3.scale.linear()
-    .domain([d3.min(dataset, function(d) {
-      return d[1];
-    }), d3.max(dataset, function(d) {
+    .domain([0, d3.max(dataset, function(d) {
       return d[1];
       })
     ])
     .range([h - padding, padding]);
 
     var rScale = d3.scale.linear()
-      .domain([0, d3.max(dataset, function(d) {
-        return d[1];
-        })
-      ])
-      .range([2, 5]);
+      .domain([0, 100])
+      .range([2, 10]);
 
     var tempScale = d3.scale.linear()
       .domain([d3.min(dataset, function(d) {
@@ -53,7 +51,7 @@ export default Ember.Component.extend({
     var xAxis = d3.svg.axis()
       .scale(xScale)
       .orient("bottom")
-      .ticks(5);
+      .ticks(0);
 
     var yAxis = d3.svg.axis()
       .scale(yScale)
@@ -74,7 +72,7 @@ export default Ember.Component.extend({
       cy: function(d) { return yScale(d[1]); },
       width: w / dataset.length - barPadding,
       fill: function(d) {
-        return "rgb(" + Math.floor(tempScale((d[2]))) + ", 0, 0)";
+        return "rgb(" + Math.floor(tempScale((d[2]))) + ", 0, " +(255 - Math.floor(tempScale((d[2])))) + ")";
       },
       r: function(d) { return rScale(d[1]); }
     });
