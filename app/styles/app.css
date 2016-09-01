@@ -24,9 +24,7 @@ div .spacer {
 .text_box {
   border-style: solid;
 }
-/*#barHolder {
-  height: 500px;
-}*/
+;
 .map-display {
     height: 100%;
     width: 100%;
@@ -42,10 +40,10 @@ div .spacer {
   z-index: 1;
 }
 
-/*svg {
+svg {
   display: none;
 }
 
 svg:last-child {
   display: block;
-}*/
+}
