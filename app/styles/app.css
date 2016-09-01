@@ -6,7 +6,7 @@
     height: 100%;
     width: 100%;
     position: absolute;
-    top: 0;
+    top: 64px;
     left: 0;
     z-index: 0;
 }
@@ -15,11 +15,4 @@
   position: absolute;
   bottom: 0;
   z-index: 1;
-}
-
-nav {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 2;
 }
