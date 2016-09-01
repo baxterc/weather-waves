@@ -1,3 +1,11 @@
 #windSpeed {
   text-align: center;
 }
+
+svg {
+  display: none;
+}
+
+svg:last-child {
+  display: block;
+}
