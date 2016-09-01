@@ -10,14 +10,25 @@ export default Ember.Component.extend({
     var windArray = [];
     var highTempArray = [];
     var lowTempArray = [];
+    var rainArray = [];
     console.log(model);
     for (var i = 0; i < model.list.length; i++) {
-      cloudsArray.push((model.list[i].clouds * 3) + 10);
-      humidityArray.push(model.list[i].humidity * 6 + 100);
-      windArray.push(model.list[i].speed * 200);
-      highTempArray.push((model.list[i].temp.max - 55));
-      lowTempArray.push((model.list[i].temp.min - 180));
+    //  cloudsArray.push((model.list[i].clouds * 3) + 10);
+      cloudsArray.push(model.list[i].clouds);
+    //  humidityArray.push(model.list[i].humidity * 6 + 100);
+    //  humidityArray.push(model.list[i].humidity);
+      windArray.push(model.list[i].speed);
+      highTempArray.push(model.list[i].temp.max);
+      lowTempArray.push(model.list[i].temp.min);
+      if (model.list[i].rain) {
+        rainArray.push(model.list[i].rain);
+      } else {
+        rainArray.push(0);
+      }
     }
+
+    console.log(highTempArray);
+    console.log(lowTempArray);
 
     let dotsContainer =
     d3.select('#holder2').append('svg').attr('width', 500).attr('height', 200);
@@ -37,14 +48,17 @@ export default Ember.Component.extend({
     .attr('cx', 300)
     .attr('r', 70);
 
-    let svgContainer = d3.select('#holder').append('svg').attr('width',2000).attr('height',1000);
+    let svgContainer = d3.select('#holder').append('svg').attr('width',1000).attr('height',500);
 
-    var axisScale = d3.scale.linear()
-    .domain([0,6])
-    .range([5,1980]);
+    var xScale = d3.scale.linear()
+    .domain([0, d3.max(windArray, function(d) {
+      return d;
+      })
+    ])
+    .range([5,980]);
 
     var xAxis = d3.svg.axis()
-    .scale(axisScale);
+    .scale(xScale);
 
     var xAxisGroup = svgContainer.append("g")
     .call(xAxis);
@@ -52,8 +66,11 @@ export default Ember.Component.extend({
 
 
     var yAxisScale = d3.scale.linear()
-    .domain([0,100])
-    .range([0, 1500]);
+    .domain([0, d3.max(rainArray, function(d) {
+      return d;
+      })
+    ])
+    .range([490, 5]);
 
     var yAxis = d3.svg.axis()
     .orient("left")
@@ -63,102 +80,125 @@ export default Ember.Component.extend({
     .attr("transform", "translate(100,0)")
     .call(yAxis);
 
+    // var highTempScale = d3.scale.linear()
+    //   .domain([d3.min(highTempArray, function(d) {
+    //     return d;
+    //   }), d3.max(highTempArray, function(d) {
+    //     return d;
+    //   })
+    // ]).range([0, 255]);
+
+    var highTempScale = d3.scale.linear()
+      .domain([280, 315])
+      .range([0, 255]);
+
+    var lowTempScale = d3.scale.linear()
+      .domain([d3.min(lowTempArray, function(d) {
+        return d;
+      }), d3.max(lowTempArray, function(d) {
+        return d;
+      })
+    ]).range([0, 255]);
+
+    var rScale = d3.scale.linear()
+      .domain([0, 100])
+      .range([10, 130]);
 
     svgContainer.append('circle')
-    .attr('cy', humidityArray[0])
-    .attr('cx', windArray[0])
-    .attr('r', cloudsArray[0])
-    .style('fill','rgb(' + highTempArray[0] + ', 0, ' + (256 - lowTempArray[0]) + ')')
+    .attr('cy', yAxisScale(rainArray[0]))
+    .attr('cx', xScale(windArray[0]))
+    .attr('r', rScale(cloudsArray[0]))
+    .style('fill','rgb(' + Math.floor(highTempScale(highTempArray[0])) + ', 0, ' + (255 - Math.floor(lowTempScale(lowTempArray[0]))) + ')')
     .transition()
-    .attr('cy', humidityArray[1])
-    .attr('cx', windArray[1])
-    .attr('r', cloudsArray[1])
+    .attr('cy', yAxisScale(rainArray[1]))
+    .attr('cx', xScale(windArray[1]))
+    .attr('r', rScale(cloudsArray[1]))
     .duration(1000)
-    .style('fill','rgb(' + highTempArray[1] + ', 0, ' + (256 - lowTempArray[1]) + ')')
+    .style('fill','rgb(' + Math.floor(highTempScale(highTempArray[1])) + ', 0, ' + (255 - Math.floor(lowTempScale(lowTempArray[1]))) + ')')
     .transition()
-    .attr('cy', humidityArray[2])
-    .attr('cx', windArray[2])
-    .attr('r', cloudsArray[2])
+    .attr('cy', yAxisScale(rainArray[2]))
+    .attr('cx', xScale(windArray[2]))
+    .attr('r', rScale(cloudsArray[2]))
     .duration(1000)
-    .style('fill','rgb(' + highTempArray[2] + ', 0, ' + (256 - lowTempArray[2]) + ')')
+    .style('fill','rgb(' + Math.floor(highTempScale(highTempArray[2])) + ', 0, ' + (255 - Math.floor(lowTempScale(lowTempArray[2]))) + ')')
     .transition()
-    .attr('cy', humidityArray[3])
-    .attr('cx', windArray[3])
-    .attr('r', cloudsArray[3])
+    .attr('cy', yAxisScale(rainArray[3]))
+    .attr('cx', xScale(windArray[3]))
+    .attr('r', rScale(cloudsArray[3]))
     .duration(1000)
-    .style('fill','rgb(' + highTempArray[3] + ', 0, ' + (256 - lowTempArray[3]) + ')')
+    .style('fill','rgb(' + Math.floor(highTempScale(highTempArray[3])) + ', 0, ' + (255 - Math.floor(lowTempScale(lowTempArray[3]))) + ')')
     .transition()
-    .attr('cy', humidityArray[4])
-    .attr('cx', windArray[4])
-    .attr('r', cloudsArray[4])
+    .attr('cy', yAxisScale(rainArray[4]))
+    .attr('cx', xScale(windArray[4]))
+    .attr('r', rScale(cloudsArray[4]))
     .duration(1000)
-    .style('fill','rgb(' + highTempArray[4] + ', 0, ' + (256 - lowTempArray[4]) + ')')
+    .style('fill','rgb(' + Math.floor(highTempScale(highTempArray[4])) + ', 0, ' + (255 - Math.floor(lowTempScale(lowTempArray[4]))) + ')')
     .transition()
-    .attr('cy', humidityArray[5])
-    .attr('cx', windArray[5])
-    .attr('r', cloudsArray[5])
+    .attr('cy', yAxisScale(rainArray[5]))
+    .attr('cx', xScale(windArray[5]))
+    .attr('r', rScale(cloudsArray[5]))
     .duration(1000)
-    .style('fill','rgb(' + highTempArray[5] + ', 0, ' + (256 - lowTempArray[5]) + ')')
+    .style('fill','rgb(' + Math.floor(highTempScale(highTempArray[5])) + ', 0, ' + (255 - Math.floor(lowTempScale(lowTempArray[5]))) + ')')
     .transition()
-    .attr('cy', humidityArray[6])
-    .attr('cx', windArray[6])
-    .attr('r', cloudsArray[6])
+    .attr('cy', yAxisScale(rainArray[6]))
+    .attr('cx', xScale(windArray[6]))
+    .attr('r', rScale(cloudsArray[6]))
     .duration(1000)
-    .style('fill','rgb(' + highTempArray[6] + ', 0, ' + (256 - lowTempArray[6]) + ')')
+    .style('fill','rgb(' + Math.floor(highTempScale(highTempArray[6])) + ', 0, ' + (255 - Math.floor(lowTempScale(lowTempArray[6]))) + ')')
     .transition()
-    .attr('cy', humidityArray[7])
-    .attr('cx', windArray[7])
-    .attr('r', cloudsArray[7])
+    .attr('cy', yAxisScale(rainArray[7]))
+    .attr('cx', xScale(windArray[7]))
+    .attr('r', rScale(cloudsArray[7]))
     .duration(1000)
-    .style('fill','rgb(' + highTempArray[7] + ', 0, ' + (256 - lowTempArray[7]) + ')')
+    .style('fill','rgb(' + Math.floor(highTempScale(highTempArray[7])) + ', 0, ' + (255 - Math.floor(lowTempScale(lowTempArray[7]))) + ')')
     .transition()
-    .attr('cy', humidityArray[8])
-    .attr('cx', windArray[8])
-    .attr('r', cloudsArray[8])
+    .attr('cy', yAxisScale(rainArray[8]))
+    .attr('cx', xScale(windArray[8]))
+    .attr('r', rScale(cloudsArray[8]))
     .duration(1000)
-    .style('fill','rgb(' + highTempArray[8] + ', 0, ' + (256 - lowTempArray[8]) + ')')
+    .style('fill','rgb(' + Math.floor(highTempScale(highTempArray[8])) + ', 0, ' + (255 - Math.floor(lowTempScale(lowTempArray[8]))) + ')')
     .transition()
-    .attr('cy', humidityArray[9])
-    .attr('cx', windArray[9])
-    .attr('r', cloudsArray[9])
+    .attr('cy', yAxisScale(rainArray[9]))
+    .attr('cx', xScale(windArray[9]))
+    .attr('r', rScale(cloudsArray[9]))
     .duration(1000)
-    .style('fill','rgb(' + highTempArray[9] + ', 0, ' + (256 - lowTempArray[9]) + ')')
+    .style('fill','rgb(' + Math.floor(highTempScale(highTempArray[9])) + ', 0, ' + (255 - Math.floor(lowTempScale(lowTempArray[9]))) + ')')
     .transition()
-    .attr('cy', humidityArray[10])
-    .attr('cx', windArray[10])
-    .attr('r', cloudsArray[10])
+    .attr('cy', yAxisScale(rainArray[10]))
+    .attr('cx', xScale(windArray[10]))
+    .attr('r', rScale(cloudsArray[10]))
     .duration(1000)
-    .style('fill','rgb(' + highTempArray[10] + ', 0, ' + (256 - lowTempArray[10]) + ')')
+    .style('fill','rgb(' + Math.floor(highTempScale(highTempArray[10])) + ', 0, ' + (255 - Math.floor(lowTempScale(lowTempArray[10]))) + ')')
     .transition()
-    .attr('cy', humidityArray[11])
-    .attr('cx', windArray[11])
-    .attr('r', cloudsArray[11])
+    .attr('cy', yAxisScale(rainArray[11]))
+    .attr('cx', xScale(windArray[11]))
+    .attr('r', rScale(cloudsArray[11]))
     .duration(1000)
-    .style('fill','rgb(' + highTempArray[11] + ', 0, ' + (256 - lowTempArray[11]) + ')')
+    .style('fill','rgb(' + Math.floor(highTempScale(highTempArray[11])) + ', 0, ' + (255 - Math.floor(lowTempScale(lowTempArray[11]))) + ')')
     .transition()
-    .attr('cy', humidityArray[12])
-    .attr('cx', windArray[12])
-    .attr('r', cloudsArray[12])
+    .attr('cy', yAxisScale(rainArray[12]))
+    .attr('cx', xScale(windArray[12]))
+    .attr('r', rScale(cloudsArray[12]))
     .duration(1000)
-    .style('fill','rgb(' + highTempArray[12] + ', 0, ' + (256 - lowTempArray[12]) + ')')
+    .style('fill','rgb(' + Math.floor(highTempScale(highTempArray[12])) + ', 0, ' + (255 - Math.floor(lowTempScale(lowTempArray[12]))) + ')')
     .transition()
-    .attr('cy', humidityArray[13])
-    .attr('cx', windArray[13])
-    .attr('r', cloudsArray[13])
+    .attr('cy', yAxisScale(rainArray[13]))
+    .attr('cx', xScale(windArray[13]))
+    .attr('r', rScale(cloudsArray[13]))
     .duration(1000)
-    .style('fill','rgb(' + highTempArray[13] + ', 0, ' + (256 - lowTempArray[13]) + ')')
+    .style('fill','rgb(' + Math.floor(highTempScale(highTempArray[13])) + ', 0, ' + (255 - Math.floor(lowTempScale(lowTempArray[13]))) + ')')
     .transition()
-    .attr('cy', humidityArray[14])
-    .attr('cx', windArray[14])
-    .attr('r', cloudsArray[14])
+    .attr('cy', yAxisScale(rainArray[14]))
+    .attr('cx', xScale(windArray[14]))
+    .attr('r', rScale(cloudsArray[14]))
     .duration(1000)
-    .style('fill','rgb(' + highTempArray[14] + ', 0, ' + (256 - lowTempArray[14]) + ')')
+    .style('fill','rgb(' + Math.floor(highTempScale(highTempArray[14])) + ', 0, ' + (255 - Math.floor(lowTempScale(lowTempArray[14]))) + ')')
     .transition()
-    .attr('cy', humidityArray[15])
-    .attr('cx', windArray[15])
-    .attr('r', cloudsArray[15])
+    .attr('cy', yAxisScale(rainArray[15]))
+    .attr('cx', xScale(windArray[15]))
+    .attr('r', rScale(cloudsArray[15]))
     .duration(1000)
-    .style('fill','rgb(' + highTempArray[15] + ', 0, ' + (256 - lowTempArray[15]) + ')');
+    .style('fill','rgb(' + Math.floor(highTempScale(highTempArray[15])) + ', 0, ' + (255 - Math.floor(lowTempScale(lowTempArray[15]))) + ')');
 
   },
 });
