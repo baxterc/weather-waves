@@ -5,7 +5,6 @@ export default Ember.Component.extend({
   didInsertElement() {
 
     var model = this.get('model');
-    console.log(model);
 
     var dataset = [];
     for (var i = 0; i < model.list.length; i++) {
@@ -58,12 +57,12 @@ export default Ember.Component.extend({
       .orient("left")
       .ticks(5);
 
-    var svg = d3.select("body")
+    var svgContainer = d3.select("#holder")
     .append("svg")
     .attr("width", w)
     .attr("height", h);
 
-    svg.selectAll("circle")
+    svgContainer.selectAll("circle")
     .data(dataset)
     .enter()
     .append("circle")
@@ -77,14 +76,25 @@ export default Ember.Component.extend({
       r: function(d) { return rScale(d[1]); }
     });
 
-    svg.append("g")
+    svgContainer.append("g")
       .attr("class", "axis")
       .attr("transform", "translate(0," + (h - padding) + ")")
       .call(xAxis);
 
-    svg.append("g")
+    svgContainer.append("g")
       .attr("class", "axis")
       .attr("transform", "translate(" + padding + ",0)")
       .call(yAxis);
- }
+
+      svgContainer.append("text")
+      .attr("text-anchor", "middle")
+      .attr("transform", "translate("+ (padding/2) +","+ (h/2) +")rotate(-90)")
+      .text("Humidity");
+
+    svgContainer.append("text")
+      .attr("text-anchor", "middle")
+      .attr("transform", "translate("+ (w/2) +", " + (h - (padding/3))  +  ")")
+      .text("Time");
+
+ },
 });
