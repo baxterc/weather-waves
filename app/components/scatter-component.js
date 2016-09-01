@@ -4,20 +4,18 @@ import d3 from 'd3';
 export default Ember.Component.extend({
   actions: {
     generateBar() {
-
       var highTemps = [];
       var lowTemps = [];
       var model = this.get('model');
       for (var i = 0; i < model.list.length; i++ ) {
         highTemps.push(model.list[i].main.temp_max);
         lowTemps.push(model.list[i].main.temp_min);
-        console.log(model.list[i].main.temp_max + 'max')
-        console.log(model.list[i].main.temp_min + 'min')
       };
       d3.select('#barHolder').selectAll('div')
       .data(highTemps)
       .enter()
       .append('div')
+      .text('3 Hrs')
       .attr("class", "bar")
       .style('background-color', 'darkred')
       .transition()
@@ -25,7 +23,7 @@ export default Ember.Component.extend({
           var barHeight = d * 8 - 2100
           return barHeight + "px"
       })
-      .duration(8000)
+      .duration(6000);
 
 
 
