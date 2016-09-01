@@ -86,5 +86,16 @@ export default Ember.Component.extend({
       .attr("class", "axis")
       .attr("transform", "translate(" + padding + ",0)")
       .call(yAxis);
+
+      svg.append("text")
+      .attr("text-anchor", "middle")
+      .attr("transform", "translate("+ (padding/2) +","+ (h/2) +")rotate(-90)")
+      .text("Humidity");
+
+    svg.append("text")
+      .attr("text-anchor", "middle")
+      .attr("transform", "translate("+ (w/2) +", " + (h - (padding/3))  +  ")")
+      .text("Time");
+
  }
 });
