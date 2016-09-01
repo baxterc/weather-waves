@@ -1,15 +1,15 @@
+<div class="map-display"></div>
 <div class="weather-display">
-  <h3>Showing wind for {{weather.name}} -- {{to-mph weather.wind.speed}}MPH from the {{wind-direction weather.wind.deg}} ({{weather.wind.deg}})</h3>
-  <button {{action 'generateWeather'}}>Display Weather</button>
+
+
   <div id="holder">
   </div>
-
-
-
   <br>
+
+    <h3>Showing wind for {{weather.name}} -- {{to-mph weather.wind.speed}}MPH from the {{wind-direction weather.wind.deg}} ({{weather.wind.deg}})</h3>
+  <button {{action 'generateWeather'}}>Display Weather</button>
   <label for="city">Enter a city below (without spaces)</label>
   {{input value=city id="city"}}
   <button {{action 'citySearch'}}>Get Weather</button>
   <button {{action 'weatherNow'}}>Show Model</button>
 </div>
-<div class="map-display"></div>

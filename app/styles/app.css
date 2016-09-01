@@ -12,6 +12,14 @@
 }
 
 .weather-display {
-  position: relative;
+  position: absolute;
+  bottom: 0;
   z-index: 1;
+}
+
+nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
 }
