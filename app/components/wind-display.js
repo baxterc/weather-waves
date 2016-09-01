@@ -7,10 +7,11 @@ export default Ember.Component.extend({
   didInsertElement() {
     var container = this.$('.map-display')[0];
     var options = {
-      center: this.get('map').center(45.522462, -122.665674),
+      center: this.get('map').center(this.get('weather.coord.lat'), this.get('weather.coord.lon')),
       scrollwheel: false,
       zoom: 15
     };
+    console.log(options);
     var fullMap = this.get('map').findMap(container, options);
   },
 
