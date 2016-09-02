@@ -1,6 +1,12 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+
+  fullConditions: Ember.computed('weather', function() {
+    var weather = this.get('weather')
+    return weather.weather[0].description;
+  }),
+
   actions: {
     generateWeather() {
       document.getElementById("holder").innerHTML = "";
@@ -21,7 +27,7 @@ export default Ember.Component.extend({
       var r = 1;
       if (weatherCode >= 200 &&  weatherCode < 300) {
         //Thunderstorm
-        while (r++ < 200 * (window.innerWidth/1080)){
+        while (r++ < 600 * (window.innerWidth/1080)){
           var startX = Math.random()*window.innerWidth;
           var startY = Math.random()*window.innerHeight;
           var radius = 5 * Math.random();
@@ -37,8 +43,8 @@ export default Ember.Component.extend({
           .ease('linear');
         }
       } else if (weatherCode >= 300 &&  weatherCode < 400 || weatherCode === 701) {
-        //Drizzle
-        while (r++ < 200 * (window.innerWidth/1080)){
+        //Drizzle and mist
+        while (r++ < 300 * (window.innerWidth/1080)){
           var startXDriz = Math.random()*window.innerWidth;
           var startYDriz = Math.random()*window.innerHeight;
           var radiusDriz = 5 * Math.random();
@@ -55,7 +61,7 @@ export default Ember.Component.extend({
         }
       } else if (weatherCode >= 500 &&  weatherCode < 600) {
         //Rain
-        while (r++ < 200 * (window.innerWidth/1080)){
+        while (r++ < 350* (window.innerWidth/1080)){
           var startXRain = Math.random()*window.innerWidth;
           var startYRain = Math.random()*window.innerHeight;
           var radiusRain = 5 * Math.random();
@@ -72,7 +78,7 @@ export default Ember.Component.extend({
         }
       } else if (weatherCode >= 600 &&  weatherCode < 700) {
         //Snow
-        while (r++ < 200 * (window.innerWidth/1080)){
+        while (r++ < 340 * (window.innerWidth/1080)){
           var startXSnow = Math.random()*window.innerWidth;
           var startYSnow = Math.random()*window.innerHeight;
           var radiusSnow = 5 * Math.random();
@@ -110,14 +116,14 @@ export default Ember.Component.extend({
       while (c++ < this.get('weather.clouds.all')) {
         var startXCloud = Math.random()*window.innerWidth;
         var startYCloud = Math.random()*window.innerHeight;
-        var radiusCloud = (this.get('weather.clouds.all')) + (Math.random()*(window.innerHeight/1080));
+        var radiusCloud = (this.get('weather.clouds.all')) + (Math.random()*100);
         svgContainer.append('rect')
         .attr('x',startXCloud)
         .attr('y',startYCloud)
         .attr('width', radiusCloud)
         .attr('height', radiusCloud)
         .style('fill', 'white')
-        .style('opacity', '0.5')
+        .style('opacity', '0.7')
         .transition()
         .attr('x', startXCloud - (((windSpeed * 60) * Math.cos(windRad))/(radiusCloud/120)) )
         .attr('y', startYCloud + (((windSpeed * 60) * Math.sin(windRad))/(radiusCloud/120)) )

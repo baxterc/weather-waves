@@ -2,10 +2,11 @@
   <div id="birdseye-bar-text">
     <h4>Current Conditions for {{weather.name}}</h4>
     <ul>
-      <li>Current Temperature: {{weather.main.temp}}</li>
-      <li>Wind: {{to-mph weather.wind.speed}} MPH from the {{wind-direction weather.wind.deg}} ({{weather.wind.deg}})</li>
+      <li>Temperature: {{to-fahrenheit weather.main.temp}}°F</li>
+      <li>Conditions: {{fullConditions}}</li>
+      <li>Wind: {{to-mph weather.wind.speed}} MPH from the {{wind-direction weather.wind.deg}} ({{weather.wind.deg}}°)</li>
       <li>Atmospheric Pressure: {{weather.main.pressure}} mbar</li>
-      <li>Humidity: {{weather.main.humidity}}</li>
+      <li>Humidity: {{weather.main.humidity}}%</li>
     </ul>
 
     <button class="waves-effect waves-light btn" {{action 'generateWeather'}}>Animate Weather</button>

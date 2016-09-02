@@ -74,7 +74,7 @@ div .spacer {
 #birdseye-bar {
   right: 0px;
   height: 100%;
-  width: 240px;
+  width: 320px;
   position: absolute;
   z-index: 2;
   background-color:rgba(0,0,0,0.5)
@@ -90,6 +90,10 @@ div .spacer {
   padding-left: 8px;
 }
 
+#birdseye-bar button{
+  margin-bottom: 8px;
+}
+
 .city-plot {
   display: none;
 }
@@ -97,3 +101,4 @@ div .spacer {
 .city-plot:last-child {
   display: block;
 }
+Contact GitHub API Training Shop Blog About
