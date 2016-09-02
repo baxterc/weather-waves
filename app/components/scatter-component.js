@@ -68,16 +68,16 @@ export default Ember.Component.extend({
       var tempGreen = Math.floor(model.list[1].main.temp_max - model.list[1].main.temp_min);
       var humidity = Math.floor(model.list[1].main.humidity);
       var clouds = Math.floor(model.list[1].clouds.all);
-      var redIncrement = Math.floor(tempMax / 144);
-      var blueIncrement = Math.floor(tempMin / 144);
+      var redIncrement = Math.floor(tempMax / 90);
+      var blueIncrement = Math.floor(tempMin / 90);
       var red = 0;
       var blue = tempMin - 100;
       var radius = 50;
-      for (var i = 0; i < 150; i++ ) {
+      for (var i = 0; i < 90; i++ ) {
         var hum = 'translate(' + humidity + ', ' + humidity + ')';
         var cld = 'translate(' + clouds + ', ' + clouds + ')';
         var randColor =  "rgb(" + red + "," + tempGreen + "," + blue + ")";
-        d3.select("body").append("svg").attr('width', 100).attr('height', 100).append('circle').attr("cx", 50).attr("cy", 50).attr("r", radius).style("fill", randColor)
+        d3.select("body").append("svg").attr('width', 150).attr('height', 150).append('circle').attr("cx", 50).attr("cy", 50).attr("r", radius).style("fill", randColor)
         .transition()
         .attr('transform', hum )
         .attr('cx', humidity)
