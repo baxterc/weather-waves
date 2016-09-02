@@ -16,12 +16,16 @@ export default Ember.Component.extend({
       for (var j = 0; j < 5; j++) {
         d3.select('#barHolder')
         .append('div')
-        .text('Day ' + j + ' ~ ' + highTemps[j] + " Kelvin")
+        .text('Day ' + j + ' ~ ' + highTemps[j] + " Kelvin Avg")
         .attr("class", "top-bar")
         .transition()
         .style('background-color', "#222")
         .style('color', "white")
-        .duration(2000);
+        .duration(2000)
+        .transition()
+        .style('background-color', "white")
+        .remove()
+        .duration(13000);
       };
 
       d3.select('#barHolder').selectAll('div')
@@ -35,7 +39,11 @@ export default Ember.Component.extend({
           var barHeight = d * 8 - 2100;
           return barHeight + "px";
       })
-      .duration(6000);
+      .duration(6000)
+      .transition()
+      .style('background-color', "white")
+      .remove()
+      .duration(9000);
 
       d3.select('#barHolder').selectAll('.bar')
       .append('div')
@@ -46,8 +54,11 @@ export default Ember.Component.extend({
       .transition()
       .style('background-color', "#222")
       .style('color', "white")
+      .duration(8000)
+      .transition()
+      .style('background-color', "white")
+      .remove()
       .duration(8000);
-
 
     },
     generateScatter() {
@@ -86,6 +97,9 @@ export default Ember.Component.extend({
         red += Math.floor(redIncrement / 2);
         radius = (red + blue) / 4;
       }
+    },
+    clearAll() {
+
     }
   },
 });
