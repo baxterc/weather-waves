@@ -91,10 +91,10 @@ div .spacer {
   padding-left: 8px;
 }
 
-/*svg {
+.city-plot {
   display: none;
-}*/
+}
 
-/*svg:last-child {
+.city-plot:last-child {
   display: block;
-}*/
+}

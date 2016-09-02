@@ -22,17 +22,57 @@ export default Ember.Route.extend({
             return tempArray;
           }
         }).then(function(){
-          // console.log(tempArray);
 
-          // var dataset = [ 5, 10, 13, 19, 21, 25, 22, 18, 15, 13, 11, 12, 15, 20, 18, 17, 16, 18, 23, 25 ];
-
-          var w = 1000;
+          var w = 900;
           var h = 500;
           var barPadding = 1;
+          var padding = 30;
+
+
+          var xScale = d3.scale.linear()
+          .domain([d3.min(tempArray, function(d) {
+            return d[0];
+          }), d3.max(tempArray, function(d) {
+            return d[0];
+            })
+          ])
+          .range([padding, w - padding * 2]);
+
+          var yScale = d3.scale.linear()
+          .domain([0, d3.max(tempArray, function(d) {
+            return d[1];
+            })
+          ])
+          .range([h - padding, padding]);
+
+          var rScale = d3.scale.linear()
+            .domain([0, 100])
+            .range([2, 10]);
+
+          var tempScale = d3.scale.linear()
+            .domain([d3.min(tempArray, function(d) {
+              return d[2];
+            }), d3.max(tempArray, function(d) {
+              return d[2];
+              })
+            ])
+            .range([0, 255]);
+
+
+          var xAxis = d3.svg.axis()
+            .scale(xScale)
+            .orient("bottom")
+            .ticks(0);
+
+          var yAxis = d3.svg.axis()
+            .scale(yScale)
+            .orient("left")
+            .ticks(5);
 
           let svgContainer = d3.select('#holder').append('svg')
           .attr("width", w)
           .attr("height", h)
+          .attr("class", "city-plot")
           .style('background', '#dff0d8')
           .selectAll('rect')
           .data(tempArray)
@@ -52,22 +92,25 @@ export default Ember.Route.extend({
             return "rgb(0, 0, " + (d * 2) + ")";
           });
 
-          svgContainer.selectAll("text")
-          .data(tempArray)
-          .enter()
-          .append("text")
-          .text(function(d) {
-            return d;
-          })
-          .attr("x", function(d, i) {
-            return i * (w / dataset.length) + 5;  // +5
-          })
-          .attr("y", function(d) {
-            return h - (d * 4) + 15;              // +15
-          })
-          .attr("font-family", "sans-serif")
-          .attr("font-size", "11px")
-          .attr("fill", "white");
+          svgContainer.append("g")
+            .attr("class", "axis")
+            .attr("transform", "translate(0," + (h - padding) + ")")
+            .call(xAxis);
+
+          svgContainer.append("g")
+            .attr("class", "axis")
+            .attr("transform", "translate(" + padding + ",0)")
+            .call(yAxis);
+
+            svgContainer.append("text")
+            .attr("text-anchor", "middle")
+            .attr("transform", "translate("+ (padding/2) +","+ (h/2) +")rotate(-90)")
+            .text("Humidity");
+
+          svgContainer.append("text")
+            .attr("text-anchor", "middle")
+            .attr("transform", "translate("+ (w/2) +", " + (h - (padding/3))  +  ")")
+            .text("Time");
 
         });
       });
