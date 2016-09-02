@@ -96,6 +96,8 @@ export default Ember.Component.extend({
         blue -= Math.floor(blueIncrement);
         red += Math.floor(redIncrement / 2);
         radius = (red + blue) / 4;
+
+        d3.select("body").selectAll("svg").transition().remove().duration(10000);
       }
     }
   },
