@@ -1,29 +1,33 @@
-<div id="scatter-main">
-  <div id="holder">
-    <div class="row">
-      <div class="col s10 offset-s1">
-        <h6>This will display a range of dots that represent the difference between today's projected minimum and maximum temperature for the selected city. The temperature is represented in color and size. The dots also move to coordinents that correspond to humidity and cloud cover percentages over subsequent intervals (bottom right is greatest amount).</h6>
-      </div>
-      <div class="col s6 offset-s3">
-        <form>
-          <div class="form-group input-field">
-            <label>Input City:</label>
-            {{input class="form-control text_box" type="text" value=inputCity}}
-            <button class="waves-effect waves-light btn" {{action 'generateScatter' city }}>Generate Daily Heat Visual</button>
+<div class="row">
+  <div id="scatter-main">
+    <div id="holder">
+      <br>
+      <div class="row">
+          <div class="col s2">
+            <form>
+              <br>
+              <div class="form-group">
+                <button class="waves-effect waves-light btn" {{action 'generateBar' city }}>Five Day Heat Forecast</button>
+              </div>
+              <br>
+            </form>
+            <form>
+              <div class="form-group">
+                <button class="waves-effect waves-light btn" {{action 'generateScatter' city }}>Today's Weather Visual</button>
+              </div>
+            </form>
           </div>
-          <br>
-          <div class="form-group">
-            <button class="waves-effect waves-light btn" {{action 'generateBar' city }}>Generate Heat Forecast</button>
+          <div class="col s10">
+            <br>
+            <h6>The five day forecast shows heat maximums in Kelvin from the next five days. Each bar represents a 3 hour period. Both of these visualizations use Madrid, Spain as a base location.</h6><br>
+            <h6>The weather visual shows an array of dots that vary in size and color over the expected max and min temperature for today. The dots then move and change size according to humidity, then cloud cover. Large and down indicates larger values, up and smaller indicates small values.</h6>
           </div>
-        </form>
+
       </div>
+      <br>
     </div>
+    <div id="barHolder">
 
-
-
-    <br>
-  </div>
-  <div id="barHolder">
-
+    </div>
   </div>
 </div>

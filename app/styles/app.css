@@ -10,7 +10,7 @@ header {
 
 div .bar {
   display: inline-block;
-  width: 2.24%;
+  width: 2.34%;
   height: 2px;
   margin-right: 0.3%;
   margin-left: 0.3%;
@@ -18,7 +18,7 @@ div .bar {
   margin-bottom: 10%;
   color: white;
   text-align: center;
-  border-radius: 6%;
+  border-radius: 5%;
 }
 
 .label {
@@ -40,7 +40,6 @@ div .bar {
   background-color: #FFF;
   color: grey;
   text-align: center;
-  border-radius: 6%;
 }
 
 div .spacer {
