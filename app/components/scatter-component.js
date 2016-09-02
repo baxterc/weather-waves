@@ -97,9 +97,6 @@ export default Ember.Component.extend({
         red += Math.floor(redIncrement / 2);
         radius = (red + blue) / 4;
       }
-    },
-    clearAll() {
-
     }
   },
 });
